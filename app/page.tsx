@@ -3,18 +3,19 @@
 import { ChangeEvent, DragEvent, useMemo, useRef, useState } from "react";
 
 type View = "upload" | "analyzing" | "verify" | "preferences" | "results" | "detail" | "favorites";
-type Ingredient = { id: number; name: string; quantity: string; days: number; urgent: boolean; available: boolean };
+type Urgency = "Urgent" | "Soon" | "Fresh";
+type Ingredient = { id: number; name: string; quantity: string; days: number; urgency: Urgency; available: boolean };
 type Recipe = { id: number; name: string; image: string; time: number; score: number; tags: string[]; used: string[]; missing: string[]; calories: number; protein: number; carbs: number; fat: number; steps: string[] };
 
 const initialIngredients: Ingredient[] = [
-  { id: 1, name: "Baby spinach", quantity: "1 bag", days: 1, urgent: true, available: true },
-  { id: 2, name: "Cooked chicken", quantity: "250 g", days: 1, urgent: true, available: true },
-  { id: 3, name: "Milk", quantity: "400 ml", days: 3, urgent: false, available: true },
-  { id: 4, name: "Eggs", quantity: "6 large", days: 14, urgent: false, available: true },
-  { id: 5, name: "Cheddar", quantity: "150 g", days: 21, urgent: false, available: true },
-  { id: 6, name: "Tomatoes", quantity: "3 medium", days: 4, urgent: false, available: true },
-  { id: 7, name: "Bell pepper", quantity: "2", days: 7, urgent: false, available: true },
-  { id: 8, name: "Broccoli", quantity: "1 head", days: 5, urgent: false, available: true },
+  { id: 1, name: "Baby spinach", quantity: "1 bag", days: 1, urgency: "Urgent", available: true },
+  { id: 2, name: "Cooked chicken", quantity: "250 g", days: 1, urgency: "Urgent", available: true },
+  { id: 3, name: "Milk", quantity: "400 ml", days: 3, urgency: "Soon", available: true },
+  { id: 4, name: "Eggs", quantity: "6 large", days: 14, urgency: "Fresh", available: true },
+  { id: 5, name: "Cheddar", quantity: "150 g", days: 21, urgency: "Fresh", available: true },
+  { id: 6, name: "Tomatoes", quantity: "3 medium", days: 4, urgency: "Soon", available: true },
+  { id: 7, name: "Bell pepper", quantity: "2", days: 7, urgency: "Fresh", available: true },
+  { id: 8, name: "Broccoli", quantity: "1 head", days: 5, urgency: "Soon", available: true },
 ];
 
 const recipes: Recipe[] = [
@@ -37,7 +38,8 @@ export default function Home() {
   const visibleRecipes = useMemo(() => recipes.slice(0, count), [count]);
   const selectFile = (file?: File) => { if (file?.type.startsWith("image/")) setPreview(URL.createObjectURL(file)); };
   const toggleDiet = (item: string) => setDietary((current) => current.includes(item) ? current.filter((value) => value !== item) : [...current, item]);
-  const addIngredient = () => setIngredients((current) => [...current, { id: Date.now(), name: "New ingredient", quantity: "1 item", days: 7, urgent: false, available: true }]);
+  const addIngredient = () => setIngredients((current) => [...current, { id: Date.now(), name: "New ingredient", quantity: "1 item", days: 7, urgency: "Fresh", available: true }]);
+  const urgentCount = ingredients.filter((ingredient) => ingredient.available && ingredient.urgency === "Urgent").length;
   const startAnalysis = () => { setView("analyzing"); window.setTimeout(() => setView("verify"), 1300); };
 
   return (
@@ -61,7 +63,7 @@ export default function Home() {
 
       {view === "analyzing" && <section className="analyzing"><div className="pulse">✦</div><p className="eyebrow">AI VISION AT WORK</p><h1>Looking inside your fridge…</h1><p>Identifying ingredients, quantities, and the things that need using soon.</p><div className="progress"><i /></div></section>}
 
-      {view === "verify" && <section className="content"><div className="stepper"><span className="active">1. Check ingredients</span><i /><span>2. Your preferences</span><i /><span>3. Recipes</span></div><div className="section-heading"><div><p className="eyebrow">HUMAN CHECK</p><h2>Does this look right?</h2><p>We found these in your fridge. Make any changes before we create your recipes.</p></div><button className="secondary" onClick={addIngredient}>+ Add ingredient</button></div><div className="notice">⚑ <span><b>2 ingredients need using today.</b> We&apos;ll prioritise them in your recipe matches.</span></div><div className="ingredient-list">{ingredients.map((ingredient) => <div className={`ingredient ${!ingredient.available ? "unavailable" : ""}`} key={ingredient.id}><button className={`check ${ingredient.available ? "checked" : ""}`} onClick={() => setIngredients((all) => all.map((item) => item.id === ingredient.id ? { ...item, available: !item.available } : item))}>✓</button><div className="ingredient-name"><b>{ingredient.name}</b><small>{ingredient.urgent ? "Use today" : `${ingredient.days} days left`}</small></div><input value={ingredient.quantity} onChange={(event) => setIngredients((all) => all.map((item) => item.id === ingredient.id ? { ...item, quantity: event.target.value } : item))} /><button className={`urgency ${ingredient.urgent ? "urgent" : ""}`} onClick={() => setIngredients((all) => all.map((item) => item.id === ingredient.id ? { ...item, urgent: !item.urgent } : item))}>{ingredient.urgent ? "Use soon" : "Fresh"}</button><button className="delete" onClick={() => setIngredients((all) => all.filter((item) => item.id !== ingredient.id))}>×</button></div>)}</div><div className="footer-actions"><button className="text-button" onClick={() => setView("upload")}>← Start over</button><button className="primary" onClick={() => setView("preferences")}>Continue to preferences →</button></div></section>}
+      {view === "verify" && <section className="content"><div className="stepper"><span className="active">1. Check ingredients</span><i /><span>2. Your preferences</span><i /><span>3. Recipes</span></div><div className="section-heading"><div><p className="eyebrow">HUMAN CHECK</p><h2>Does this look right?</h2><p>We found these in your fridge. Make any changes before we create your recipes.</p></div><button className="secondary" onClick={addIngredient}>+ Add ingredient</button></div><div className="notice">⚑ <span><b>{urgentCount} ingredient{urgentCount === 1 ? "" : "s"} marked urgent.</b> We&apos;ll prioritise them in your recipe matches.</span></div><div className="ingredient-list">{ingredients.map((ingredient) => <div className={`ingredient ${!ingredient.available ? "unavailable" : ""}`} key={ingredient.id}><button className={`check ${ingredient.available ? "checked" : ""}`} onClick={() => setIngredients((all) => all.map((item) => item.id === ingredient.id ? { ...item, available: !item.available } : item))}>✓</button><div className="ingredient-name"><b>{ingredient.name}</b><small>{ingredient.urgency === "Urgent" ? "Use today" : `${ingredient.days} days left`}</small></div><input value={ingredient.quantity} onChange={(event) => setIngredients((all) => all.map((item) => item.id === ingredient.id ? { ...item, quantity: event.target.value } : item))} /><div className="urgency-selector" aria-label={`Set urgency for ${ingredient.name}`}>{(["Urgent", "Soon", "Fresh"] as Urgency[]).map((urgency) => <button key={urgency} className={ingredient.urgency === urgency ? `selected ${urgency.toLowerCase()}` : ""} onClick={() => setIngredients((all) => all.map((item) => item.id === ingredient.id ? { ...item, urgency } : item))}>{urgency}</button>)}</div><button className="delete" onClick={() => setIngredients((all) => all.filter((item) => item.id !== ingredient.id))}>×</button></div>)}</div><div className="footer-actions"><button className="text-button" onClick={() => setView("upload")}>← Start over</button><button className="primary" onClick={() => setView("preferences")}>Continue to preferences →</button></div></section>}
 
       {view === "preferences" && <section className="content narrow"><div className="stepper"><span>1. Check ingredients</span><i /><span className="active">2. Your preferences</span><i /><span>3. Recipes</span></div><p className="eyebrow">MAKE IT YOURS</p><h2>What are you in the mood for?</h2><p className="lead">We&apos;ll use these to tailor your recipe matches.</p><div className="preference"><label>Number of recipes</label><div className="segmented">{[3, 5, 10].map((number) => <button key={number} className={count === number ? "selected" : ""} onClick={() => setCount(number)}>{number} recipes</button>)}</div></div><div className="preference"><label>Dietary requirements</label><div className="chips">{["Vegetarian", "Vegan", "Gluten-free", "Dairy-free", "High-protein", "Low-carb"].map((item) => <button key={item} className={dietary.includes(item) ? "selected" : ""} onClick={() => toggleDiet(item)}>{dietary.includes(item) ? "✓ " : "+ "}{item}</button>)}</div></div><div className="preference grid-preferences"><div><label>Meal type</label><select defaultValue="Dinner"><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snacks</option></select></div><div><label>Cooking time</label><select defaultValue="Under 30 min"><option>Under 15 min</option><option>Under 30 min</option><option>Under 1 hour</option></select></div></div><div className="footer-actions"><button className="text-button" onClick={() => setView("verify")}>← Back</button><button className="primary" onClick={() => setView("results")}>Find my recipes →</button></div></section>}
 
