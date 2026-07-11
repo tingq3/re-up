@@ -41,7 +41,33 @@
     { "name": "banana", "aliases": ["bananas"], "attributes": [] },
     { "name": "honey", "aliases": [], "attributes": ["honey"] },
     { "name": "walnut", "aliases": ["walnuts"], "attributes": ["nuts"] },
-    { "name": "vegetable stock", "aliases": ["stock", "chicken stock", "broth"], "attributes": [] }
+    { "name": "vegetable stock", "aliases": ["stock", "chicken stock", "broth"], "attributes": [] },
+    { "name": "beef", "aliases": ["ground beef", "beef mince", "steak"], "attributes": ["meat"] },
+    { "name": "pork", "aliases": ["pork chops", "pork loin"], "attributes": ["meat"] },
+    { "name": "turkey", "aliases": ["ground turkey", "turkey mince"], "attributes": ["meat"] },
+    { "name": "bacon", "aliases": ["bacon slices", "streaky bacon"], "attributes": ["meat"] },
+    { "name": "tuna", "aliases": ["canned tuna", "tuna fillet"], "attributes": ["fish"] },
+    { "name": "lentils", "aliases": ["red lentils", "green lentils"], "attributes": [] },
+    { "name": "sweet potato", "aliases": ["sweet potatoes", "yam"], "attributes": [] },
+    { "name": "cauliflower", "aliases": ["cauliflower florets"], "attributes": [] },
+    { "name": "tofu", "aliases": ["firm tofu", "silken tofu"], "attributes": [] },
+    { "name": "quinoa", "aliases": ["cooked quinoa"], "attributes": [] },
+    { "name": "kale", "aliases": ["kale leaves", "curly kale"], "attributes": [] },
+    { "name": "cucumber", "aliases": ["cucumbers"], "attributes": [] },
+    { "name": "feta", "aliases": ["feta cheese"], "attributes": ["dairy"] },
+    { "name": "olives", "aliases": ["kalamata olives", "black olives"], "attributes": [] },
+    { "name": "lettuce", "aliases": ["romaine lettuce", "iceberg lettuce"], "attributes": [] },
+    { "name": "bread", "aliases": ["bread slices", "sandwich bread"], "attributes": ["gluten"] },
+    { "name": "mayo", "aliases": ["mayonnaise"], "attributes": ["egg"] },
+    { "name": "cabbage", "aliases": ["red cabbage", "green cabbage"], "attributes": [] },
+    { "name": "peanut butter", "aliases": [], "attributes": ["nuts"] },
+    { "name": "greek yogurt", "aliases": ["yogurt", "plain yogurt"], "attributes": ["dairy"] },
+    { "name": "eggplant", "aliases": ["aubergine"], "attributes": [] },
+    { "name": "cinnamon", "aliases": ["ground cinnamon"], "attributes": [] },
+    { "name": "flour", "aliases": ["all-purpose flour", "plain flour"], "attributes": ["gluten"] },
+    { "name": "peas", "aliases": ["frozen peas", "green peas"], "attributes": [] },
+    { "name": "sesame oil", "aliases": [], "attributes": [] },
+    { "name": "apple", "aliases": ["apples"], "attributes": [] }
   ],
   "recipes": [
     {
@@ -346,6 +372,528 @@
         { "name": "mushroom", "quantity": "150 g" },
         { "name": "spinach", "quantity": "2 handfuls" },
         { "name": "cheddar", "quantity": "80 g" }
+      ]
+    },
+    {
+      "name": "Beef Tacos",
+      "image_url": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 20, "servings": 3, "calories": 420, "protein": 28, "carbs": 30, "fat": 20,
+      "cuisine": "Mexican", "category": "Dinner", "tags": ["High protein", "Quick"],
+      "steps": [
+        "Brown the beef with onion, cumin and paprika.",
+        "Warm the corn tortillas.",
+        "Fill with beef and top with tomato, cheddar, cilantro and a squeeze of lime."
+      ],
+      "ingredients": [
+        { "name": "beef", "quantity": "400 g" },
+        { "name": "corn tortilla", "quantity": "6" },
+        { "name": "onion", "quantity": "1" },
+        { "name": "tomato", "quantity": "2" },
+        { "name": "cumin", "quantity": "1 tsp", "optional": true },
+        { "name": "paprika", "quantity": "1 tsp", "optional": true },
+        { "name": "cheddar", "quantity": "80 g", "optional": true },
+        { "name": "cilantro", "quantity": "handful", "optional": true },
+        { "name": "lime", "quantity": "1", "optional": true }
+      ]
+    },
+    {
+      "name": "Spaghetti Bolognese",
+      "image_url": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 35, "servings": 4, "calories": 560, "protein": 32, "carbs": 58, "fat": 20,
+      "cuisine": "Italian", "category": "Dinner", "tags": ["Comfort food"],
+      "steps": [
+        "Brown the beef with onion and garlic.",
+        "Add tomato and simmer into a rich sauce.",
+        "Toss with cooked pasta and finish with parmesan."
+      ],
+      "ingredients": [
+        { "name": "pasta", "quantity": "300 g" },
+        { "name": "beef", "quantity": "400 g" },
+        { "name": "tomato", "quantity": "4" },
+        { "name": "onion", "quantity": "1" },
+        { "name": "garlic", "quantity": "2 cloves" },
+        { "name": "parmesan", "quantity": "40 g", "optional": true }
+      ]
+    },
+    {
+      "name": "Tortilla Margherita Flatbread",
+      "image_url": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 12, "servings": 2, "calories": 340, "protein": 16, "carbs": 34, "fat": 14,
+      "cuisine": "Italian", "category": "Lunch", "tags": ["Vegetarian", "Quick"],
+      "steps": [
+        "Top the tortillas with tomato and mozzarella.",
+        "Bake or pan-toast until the cheese melts.",
+        "Scatter with fresh basil."
+      ],
+      "ingredients": [
+        { "name": "tortilla", "quantity": "2" },
+        { "name": "tomato", "quantity": "2" },
+        { "name": "mozzarella", "quantity": "100 g" },
+        { "name": "basil", "quantity": "handful", "optional": true }
+      ]
+    },
+    {
+      "name": "Greek Salad",
+      "image_url": "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 10, "servings": 2, "calories": 260, "protein": 9, "carbs": 12, "fat": 20,
+      "cuisine": "Mediterranean", "category": "Lunch", "tags": ["Vegetarian", "Gluten free", "Quick"],
+      "steps": [
+        "Chop the cucumber, tomato and onion.",
+        "Toss with olives and feta.",
+        "Dress with olive oil."
+      ],
+      "ingredients": [
+        { "name": "cucumber", "quantity": "1" },
+        { "name": "tomato", "quantity": "3" },
+        { "name": "feta", "quantity": "100 g" },
+        { "name": "olives", "quantity": "handful" },
+        { "name": "onion", "quantity": "1/2" },
+        { "name": "olive oil", "quantity": "2 tbsp", "optional": true }
+      ]
+    },
+    {
+      "name": "Red Lentil Soup",
+      "image_url": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 30, "servings": 4, "calories": 260, "protein": 15, "carbs": 40, "fat": 4,
+      "cuisine": "Indian", "category": "Lunch", "tags": ["Vegan", "Gluten free"],
+      "steps": [
+        "Soften the onion, garlic and carrot.",
+        "Add lentils, cumin and stock, then simmer until tender.",
+        "Blend partially for a creamy texture."
+      ],
+      "ingredients": [
+        { "name": "lentils", "quantity": "200 g" },
+        { "name": "onion", "quantity": "1" },
+        { "name": "garlic", "quantity": "2 cloves" },
+        { "name": "carrot", "quantity": "1" },
+        { "name": "cumin", "quantity": "1 tsp" },
+        { "name": "vegetable stock", "quantity": "1 litre" }
+      ]
+    },
+    {
+      "name": "Beef & Broccoli Stir-fry",
+      "image_url": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 20, "servings": 3, "calories": 420, "protein": 30, "carbs": 30, "fat": 18,
+      "cuisine": "Asian", "category": "Dinner", "tags": ["High protein", "Quick"],
+      "steps": [
+        "Sear the beef over high heat and set aside.",
+        "Stir-fry the broccoli with garlic and ginger.",
+        "Return the beef, toss with soy sauce and serve over rice."
+      ],
+      "ingredients": [
+        { "name": "beef", "quantity": "350 g" },
+        { "name": "broccoli", "quantity": "1 head" },
+        { "name": "garlic", "quantity": "2 cloves" },
+        { "name": "ginger", "quantity": "1 thumb" },
+        { "name": "soy sauce", "quantity": "3 tbsp" },
+        { "name": "rice", "quantity": "300 g", "optional": true }
+      ]
+    },
+    {
+      "name": "Pork Chops with Apples",
+      "image_url": "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 30, "servings": 2, "calories": 380, "protein": 34, "carbs": 20, "fat": 16,
+      "cuisine": "American", "category": "Dinner", "tags": ["High protein", "Gluten free"],
+      "steps": [
+        "Sear the pork chops in butter until golden.",
+        "Add sliced onion and apple to the pan.",
+        "Cook until the apples soften and the pork is cooked through."
+      ],
+      "ingredients": [
+        { "name": "pork", "quantity": "2 chops" },
+        { "name": "apple", "quantity": "2" },
+        { "name": "onion", "quantity": "1" },
+        { "name": "butter", "quantity": "1 tbsp", "optional": true }
+      ]
+    },
+    {
+      "name": "BLT Sandwich",
+      "image_url": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 15, "servings": 2, "calories": 420, "protein": 16, "carbs": 34, "fat": 26,
+      "cuisine": "American", "category": "Lunch", "tags": ["Quick"],
+      "steps": [
+        "Fry the bacon until crisp.",
+        "Toast the bread and spread with mayo.",
+        "Layer with lettuce, tomato and bacon."
+      ],
+      "ingredients": [
+        { "name": "bacon", "quantity": "6 slices" },
+        { "name": "lettuce", "quantity": "4 leaves" },
+        { "name": "tomato", "quantity": "2" },
+        { "name": "bread", "quantity": "4 slices" },
+        { "name": "mayo", "quantity": "2 tbsp", "optional": true }
+      ]
+    },
+    {
+      "name": "Tuna Salad Sandwich",
+      "image_url": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 10, "servings": 2, "calories": 380, "protein": 30, "carbs": 28, "fat": 16,
+      "cuisine": "American", "category": "Lunch", "tags": ["Quick", "High protein"],
+      "steps": [
+        "Mix the tuna with mayo and spring onion.",
+        "Season with a squeeze of lemon.",
+        "Pile onto bread and slice."
+      ],
+      "ingredients": [
+        { "name": "tuna", "quantity": "2 cans" },
+        { "name": "mayo", "quantity": "3 tbsp" },
+        { "name": "bread", "quantity": "4 slices" },
+        { "name": "spring onion", "quantity": "2", "optional": true },
+        { "name": "lemon", "quantity": "1", "optional": true }
+      ]
+    },
+    {
+      "name": "Turkey Chili",
+      "image_url": "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 35, "servings": 4, "calories": 360, "protein": 34, "carbs": 26, "fat": 10,
+      "cuisine": "American", "category": "Dinner", "tags": ["High protein", "Gluten free"],
+      "steps": [
+        "Brown the turkey with onion.",
+        "Stir in tomato, black beans, cumin and paprika.",
+        "Simmer until thickened."
+      ],
+      "ingredients": [
+        { "name": "turkey", "quantity": "400 g" },
+        { "name": "black beans", "quantity": "1 can" },
+        { "name": "tomato", "quantity": "3" },
+        { "name": "onion", "quantity": "1" },
+        { "name": "cumin", "quantity": "1 tsp" },
+        { "name": "paprika", "quantity": "1 tsp" }
+      ]
+    },
+    {
+      "name": "Greek Yogurt Honey Parfait",
+      "image_url": "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 5, "servings": 2, "calories": 280, "protein": 18, "carbs": 30, "fat": 10,
+      "cuisine": "Mediterranean", "category": "Breakfast", "tags": ["Vegetarian", "Quick"],
+      "steps": [
+        "Spoon the yogurt into bowls.",
+        "Drizzle with honey.",
+        "Top with banana and walnuts."
+      ],
+      "ingredients": [
+        { "name": "greek yogurt", "quantity": "300 g" },
+        { "name": "honey", "quantity": "2 tbsp" },
+        { "name": "banana", "quantity": "1", "optional": true },
+        { "name": "walnut", "quantity": "handful", "optional": true }
+      ]
+    },
+    {
+      "name": "Caprese Salad",
+      "image_url": "https://images.unsplash.com/photo-1543339494-b4cd4f7ba686?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 10, "servings": 2, "calories": 300, "protein": 14, "carbs": 8, "fat": 24,
+      "cuisine": "Italian", "category": "Lunch", "tags": ["Vegetarian", "Gluten free", "Quick"],
+      "steps": [
+        "Slice the tomato and mozzarella.",
+        "Arrange alternating slices on a plate.",
+        "Scatter with basil and drizzle with olive oil."
+      ],
+      "ingredients": [
+        { "name": "tomato", "quantity": "3" },
+        { "name": "mozzarella", "quantity": "150 g" },
+        { "name": "basil", "quantity": "handful" },
+        { "name": "olive oil", "quantity": "2 tbsp", "optional": true }
+      ]
+    },
+    {
+      "name": "Eggplant Parmesan",
+      "image_url": "https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 45, "servings": 3, "calories": 380, "protein": 20, "carbs": 26, "fat": 22,
+      "cuisine": "Italian", "category": "Dinner", "tags": ["Vegetarian"],
+      "steps": [
+        "Slice the eggplant, dust with flour and pan-fry until golden.",
+        "Layer with tomato, mozzarella and parmesan.",
+        "Bake until bubbling."
+      ],
+      "ingredients": [
+        { "name": "eggplant", "quantity": "1 large" },
+        { "name": "tomato", "quantity": "3" },
+        { "name": "mozzarella", "quantity": "150 g" },
+        { "name": "parmesan", "quantity": "50 g" },
+        { "name": "flour", "quantity": "3 tbsp", "optional": true },
+        { "name": "egg", "quantity": "1", "optional": true }
+      ]
+    },
+    {
+      "name": "Cauliflower Fried Rice",
+      "image_url": "https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 20, "servings": 3, "calories": 220, "protein": 12, "carbs": 18, "fat": 10,
+      "cuisine": "Asian", "category": "Dinner", "tags": ["Vegetarian", "Low carb"],
+      "steps": [
+        "Pulse the cauliflower into rice-sized pieces.",
+        "Scramble the egg and set aside.",
+        "Stir-fry the cauliflower with carrot, garlic and soy sauce, then fold the egg and spring onion back in."
+      ],
+      "ingredients": [
+        { "name": "cauliflower", "quantity": "1 head" },
+        { "name": "egg", "quantity": "2" },
+        { "name": "carrot", "quantity": "1" },
+        { "name": "spring onion", "quantity": "2" },
+        { "name": "soy sauce", "quantity": "2 tbsp" },
+        { "name": "garlic", "quantity": "2 cloves", "optional": true }
+      ]
+    },
+    {
+      "name": "Sweet Potato Black Bean Bowl",
+      "image_url": "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 35, "servings": 2, "calories": 380, "protein": 12, "carbs": 58, "fat": 12,
+      "cuisine": "Mexican", "category": "Lunch", "tags": ["Vegan", "Gluten free"],
+      "steps": [
+        "Roast the sweet potato with cumin until tender.",
+        "Warm the black beans.",
+        "Assemble in a bowl with avocado, lime and cilantro."
+      ],
+      "ingredients": [
+        { "name": "sweet potato", "quantity": "2" },
+        { "name": "black beans", "quantity": "1 can" },
+        { "name": "avocado", "quantity": "1" },
+        { "name": "lime", "quantity": "1" },
+        { "name": "cumin", "quantity": "1 tsp", "optional": true },
+        { "name": "cilantro", "quantity": "handful", "optional": true }
+      ]
+    },
+    {
+      "name": "Kale Caesar Salad",
+      "image_url": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 15, "servings": 2, "calories": 260, "protein": 12, "carbs": 20, "fat": 16,
+      "cuisine": "American", "category": "Lunch", "tags": ["Vegetarian"],
+      "steps": [
+        "Massage the kale with olive oil and lemon.",
+        "Toast bread cubes for croutons.",
+        "Toss with parmesan and croutons."
+      ],
+      "ingredients": [
+        { "name": "kale", "quantity": "1 bunch" },
+        { "name": "parmesan", "quantity": "50 g" },
+        { "name": "bread", "quantity": "2 slices", "optional": true },
+        { "name": "lemon", "quantity": "1", "optional": true },
+        { "name": "olive oil", "quantity": "2 tbsp", "optional": true }
+      ]
+    },
+    {
+      "name": "Tofu Vegetable Stir-fry",
+      "image_url": "https://images.unsplash.com/photo-1608835291093-394b0c943a75?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 20, "servings": 3, "calories": 320, "protein": 20, "carbs": 22, "fat": 18,
+      "cuisine": "Asian", "category": "Dinner", "tags": ["Vegan"],
+      "steps": [
+        "Pan-fry the tofu until golden and set aside.",
+        "Stir-fry the broccoli and carrot with garlic and ginger.",
+        "Return the tofu, toss with soy sauce and a drizzle of sesame oil."
+      ],
+      "ingredients": [
+        { "name": "tofu", "quantity": "400 g" },
+        { "name": "broccoli", "quantity": "1 head" },
+        { "name": "carrot", "quantity": "1" },
+        { "name": "garlic", "quantity": "2 cloves" },
+        { "name": "ginger", "quantity": "1 thumb" },
+        { "name": "soy sauce", "quantity": "3 tbsp" },
+        { "name": "sesame oil", "quantity": "1 tbsp", "optional": true }
+      ]
+    },
+    {
+      "name": "Peanut Butter Banana Smoothie",
+      "image_url": "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 5, "servings": 2, "calories": 340, "protein": 14, "carbs": 42, "fat": 14,
+      "cuisine": "American", "category": "Breakfast", "tags": ["Vegetarian", "Quick", "No cook"],
+      "steps": [
+        "Add the banana, peanut butter, milk and oats to a blender.",
+        "Blend until smooth.",
+        "Sweeten with honey if needed."
+      ],
+      "ingredients": [
+        { "name": "banana", "quantity": "2" },
+        { "name": "peanut butter", "quantity": "2 tbsp" },
+        { "name": "milk", "quantity": "300 ml" },
+        { "name": "oats", "quantity": "30 g", "optional": true },
+        { "name": "honey", "quantity": "1 tbsp", "optional": true }
+      ]
+    },
+    {
+      "name": "Mediterranean Quinoa Bowl",
+      "image_url": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 25, "servings": 3, "calories": 400, "protein": 15, "carbs": 55, "fat": 14,
+      "cuisine": "Mediterranean", "category": "Lunch", "tags": ["Vegan", "Gluten free"],
+      "steps": [
+        "Cook the quinoa and let it cool slightly.",
+        "Toss with chickpeas, cucumber and tomato.",
+        "Finish with olives and a squeeze of lemon."
+      ],
+      "ingredients": [
+        { "name": "quinoa", "quantity": "200 g" },
+        { "name": "chickpeas", "quantity": "1 can" },
+        { "name": "cucumber", "quantity": "1" },
+        { "name": "tomato", "quantity": "2" },
+        { "name": "olives", "quantity": "handful", "optional": true },
+        { "name": "lemon", "quantity": "1", "optional": true }
+      ]
+    },
+    {
+      "name": "Creamy Mushroom Soup",
+      "image_url": "https://images.unsplash.com/photo-1615361200141-f45040f367be?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 30, "servings": 3, "calories": 240, "protein": 8, "carbs": 16, "fat": 16,
+      "cuisine": "French", "category": "Lunch", "tags": ["Vegetarian", "Comfort food"],
+      "steps": [
+        "Saute the mushroom, onion and garlic in butter.",
+        "Add stock and simmer, then blend until smooth.",
+        "Stir in milk and warm through."
+      ],
+      "ingredients": [
+        { "name": "mushroom", "quantity": "400 g" },
+        { "name": "onion", "quantity": "1" },
+        { "name": "garlic", "quantity": "2 cloves" },
+        { "name": "butter", "quantity": "2 tbsp" },
+        { "name": "milk", "quantity": "200 ml" },
+        { "name": "vegetable stock", "quantity": "500 ml" }
+      ]
+    },
+    {
+      "name": "Chicken Caesar Wrap",
+      "image_url": "https://images.unsplash.com/photo-1512152272829-e3139592d56f?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 15, "servings": 2, "calories": 400, "protein": 32, "carbs": 32, "fat": 16,
+      "cuisine": "American", "category": "Lunch", "tags": ["High protein", "Quick"],
+      "steps": [
+        "Sear the chicken and slice.",
+        "Fill the tortillas with lettuce, chicken and parmesan.",
+        "Finish with a squeeze of lemon and roll up."
+      ],
+      "ingredients": [
+        { "name": "chicken", "quantity": "250 g" },
+        { "name": "tortilla", "quantity": "2" },
+        { "name": "lettuce", "quantity": "4 leaves" },
+        { "name": "parmesan", "quantity": "30 g" },
+        { "name": "lemon", "quantity": "1", "optional": true }
+      ]
+    },
+    {
+      "name": "Salmon Poke Bowl",
+      "image_url": "https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 20, "servings": 2, "calories": 460, "protein": 30, "carbs": 45, "fat": 18,
+      "cuisine": "Asian", "category": "Dinner", "tags": ["High protein"],
+      "steps": [
+        "Cube the salmon and marinate briefly in soy sauce and sesame oil.",
+        "Cook the rice and let it cool slightly.",
+        "Assemble the bowl with rice, salmon, cucumber, avocado and spring onion."
+      ],
+      "ingredients": [
+        { "name": "salmon", "quantity": "2 fillets" },
+        { "name": "rice", "quantity": "300 g" },
+        { "name": "cucumber", "quantity": "1" },
+        { "name": "avocado", "quantity": "1" },
+        { "name": "soy sauce", "quantity": "2 tbsp" },
+        { "name": "spring onion", "quantity": "2", "optional": true },
+        { "name": "sesame oil", "quantity": "1 tbsp", "optional": true }
+      ]
+    },
+    {
+      "name": "Shrimp Tacos with Cabbage Slaw",
+      "image_url": "https://images.unsplash.com/photo-1478144592103-25e218a04891?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 20, "servings": 3, "calories": 340, "protein": 26, "carbs": 34, "fat": 10,
+      "cuisine": "Mexican", "category": "Dinner", "tags": ["Quick", "Gluten free"],
+      "steps": [
+        "Season and cook the shrimp until pink.",
+        "Toss the cabbage with lime and cilantro for a quick slaw.",
+        "Warm the tortillas and fill with shrimp and slaw."
+      ],
+      "ingredients": [
+        { "name": "shrimp", "quantity": "300 g" },
+        { "name": "corn tortilla", "quantity": "6" },
+        { "name": "cabbage", "quantity": "2 cups" },
+        { "name": "lime", "quantity": "1" },
+        { "name": "cilantro", "quantity": "handful", "optional": true }
+      ]
+    },
+    {
+      "name": "Cauliflower Chickpea Curry",
+      "image_url": "https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 30, "servings": 4, "calories": 360, "protein": 12, "carbs": 40, "fat": 18,
+      "cuisine": "Indian", "category": "Dinner", "tags": ["Vegan", "Gluten free"],
+      "steps": [
+        "Fry the onion, garlic and ginger with curry powder.",
+        "Add cauliflower, chickpeas, tomato and coconut milk.",
+        "Simmer until the cauliflower is tender."
+      ],
+      "ingredients": [
+        { "name": "cauliflower", "quantity": "1 head" },
+        { "name": "chickpeas", "quantity": "1 can" },
+        { "name": "tomato", "quantity": "2" },
+        { "name": "coconut milk", "quantity": "1 can" },
+        { "name": "curry powder", "quantity": "2 tbsp" },
+        { "name": "onion", "quantity": "1" },
+        { "name": "garlic", "quantity": "2 cloves" },
+        { "name": "ginger", "quantity": "1 thumb", "optional": true }
+      ]
+    },
+    {
+      "name": "Baked Ziti",
+      "image_url": "https://images.unsplash.com/photo-1607532941433-304659e8198a?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 40, "servings": 4, "calories": 520, "protein": 24, "carbs": 60, "fat": 20,
+      "cuisine": "Italian", "category": "Dinner", "tags": ["Vegetarian", "Comfort food"],
+      "steps": [
+        "Cook the pasta until just al dente.",
+        "Toss with tomato and half the mozzarella and parmesan.",
+        "Top with remaining cheese and bake until bubbling."
+      ],
+      "ingredients": [
+        { "name": "pasta", "quantity": "300 g" },
+        { "name": "mozzarella", "quantity": "200 g" },
+        { "name": "parmesan", "quantity": "50 g" },
+        { "name": "tomato", "quantity": "4" }
+      ]
+    },
+    {
+      "name": "Cinnamon French Toast",
+      "image_url": "https://images.unsplash.com/photo-1495521821757-a1efb6729352?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 15, "servings": 2, "calories": 360, "protein": 14, "carbs": 42, "fat": 14,
+      "cuisine": "American", "category": "Breakfast", "tags": ["Vegetarian"],
+      "steps": [
+        "Whisk the egg with milk and cinnamon.",
+        "Dip the bread slices and fry in butter until golden.",
+        "Serve with a drizzle of honey."
+      ],
+      "ingredients": [
+        { "name": "bread", "quantity": "6 slices" },
+        { "name": "egg", "quantity": "3" },
+        { "name": "milk", "quantity": "150 ml" },
+        { "name": "cinnamon", "quantity": "1 tsp" },
+        { "name": "butter", "quantity": "1 tbsp", "optional": true },
+        { "name": "honey", "quantity": "1 tbsp", "optional": true }
+      ]
+    },
+    {
+      "name": "Fluffy Pancakes",
+      "image_url": "https://images.unsplash.com/photo-1484980972926-edee96e0960d?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 20, "servings": 3, "calories": 340, "protein": 10, "carbs": 48, "fat": 12,
+      "cuisine": "American", "category": "Breakfast", "tags": ["Vegetarian"],
+      "steps": [
+        "Whisk the flour, egg and milk into a smooth batter.",
+        "Ladle onto a hot buttered pan.",
+        "Flip when bubbles form and cook through."
+      ],
+      "ingredients": [
+        { "name": "flour", "quantity": "200 g" },
+        { "name": "egg", "quantity": "2" },
+        { "name": "milk", "quantity": "250 ml" },
+        { "name": "butter", "quantity": "2 tbsp" },
+        { "name": "honey", "quantity": "2 tbsp", "optional": true }
+      ]
+    },
+    {
+      "name": "Chicken Noodle Soup",
+      "image_url": "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 30, "servings": 4, "calories": 320, "protein": 26, "carbs": 34, "fat": 8,
+      "cuisine": "American", "category": "Lunch", "tags": ["Comfort food"],
+      "steps": [
+        "Simmer the chicken with carrot, onion and garlic in stock.",
+        "Shred the chicken once cooked through.",
+        "Add pasta and cook until tender."
+      ],
+      "ingredients": [
+        { "name": "chicken", "quantity": "250 g" },
+        { "name": "pasta", "quantity": "150 g" },
+        { "name": "carrot", "quantity": "2" },
+        { "name": "onion", "quantity": "1" },
+        { "name": "garlic", "quantity": "2 cloves", "optional": true },
+        { "name": "vegetable stock", "quantity": "1.2 litre" }
       ]
     }
   ]

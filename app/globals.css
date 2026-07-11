@@ -211,6 +211,12 @@ h2,
   justify-content: center;
 }
 
+.text-link-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 6px;
+}
+
 .primary,
 .secondary {
   border-radius: 10px;
@@ -228,6 +234,16 @@ h2,
 
 .primary:hover {
   background: #1d614d;
+}
+
+.primary:disabled {
+  background: #aabbb0;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.primary:disabled:hover {
+  background: #aabbb0;
 }
 
 .primary b {
@@ -351,6 +367,76 @@ h2,
   border-radius: 10px;
   font-size: 14px;
   margin: 9px 0 21px;
+}
+
+/* ---- Verify: add-ingredient picker ---- */
+
+.add-ingredient {
+  position: relative;
+}
+
+.ingredient-picker {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10;
+  width: 260px;
+  background: #fffefb;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(32, 52, 45, 0.14);
+  padding: 10px;
+}
+
+.ingredient-picker-search {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 10px;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.ingredient-picker-list {
+  max-height: 240px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ingredient-picker-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  background: none;
+  text-align: left;
+  padding: 9px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.ingredient-picker-item:hover:not(:disabled) {
+  background: var(--pale);
+}
+
+.ingredient-picker-item:disabled {
+  color: #aab3ad;
+  cursor: not-allowed;
+}
+
+.ingredient-picker-item small {
+  color: #aab3ad;
+  font-size: 10px;
+}
+
+.ingredient-picker-empty {
+  color: var(--muted);
+  font-size: 13px;
+  padding: 9px 10px;
+  margin: 0;
 }
 
 /* ---- Verify: ingredient list ---- */
@@ -512,12 +598,18 @@ h2,
   margin-bottom: 13px;
 }
 
-.segmented {
-  display: flex;
-  gap: 8px;
+.preference .hint {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 10px 0 0;
 }
 
-.segmented button,
+.show-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
 .chips button {
   background: #fff;
   border: 1px solid var(--line);
@@ -527,7 +619,6 @@ h2,
   font-size: 13px;
 }
 
-.segmented .selected,
 .chips .selected {
   background: var(--pale);
   border-color: #7cad8b;

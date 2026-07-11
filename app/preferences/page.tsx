@@ -10,13 +10,9 @@ import {
 } from "@/lib/fridge-context";
 import Stepper from "../components/stepper";
 
-const RECIPE_COUNTS = [3, 5, 10];
-
 export default function PreferencesPage() {
   const router = useRouter();
   const {
-    count,
-    setCount,
     dietary,
     toggleDiet,
     mealType,
@@ -25,6 +21,8 @@ export default function PreferencesPage() {
     setCookTime,
     cuisine,
     setCuisine,
+    allowPartial,
+    setAllowPartial,
     findRecipes,
   } = useFridge();
 
@@ -43,21 +41,6 @@ export default function PreferencesPage() {
       <p className="lead">We&apos;ll use these to tailor your recipe matches.</p>
 
       <div className="preference">
-        <label>Number of recipes</label>
-        <div className="segmented">
-          {RECIPE_COUNTS.map((number) => (
-            <button
-              key={number}
-              className={count === number ? "selected" : ""}
-              onClick={() => setCount(number)}
-            >
-              {number} recipes
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="preference">
         <label>Dietary requirements</label>
         <div className="chips">
           {DIETARY.map((item) => (
@@ -71,6 +54,24 @@ export default function PreferencesPage() {
             </button>
           ))}
         </div>
+      </div>
+
+      <div className="preference">
+        <label>Match strictness</label>
+        <div className="chips">
+          <button
+            className={allowPartial ? "selected" : ""}
+            onClick={() => setAllowPartial(!allowPartial)}
+          >
+            {allowPartial ? "✓ " : "+ "}
+            Allow missing ingredients
+          </button>
+        </div>
+        <p className="hint">
+          {allowPartial
+            ? "Showing recipes you can nearly make, with a shopping list for what's missing."
+            : "Only showing recipes you can make right now with what's in your fridge."}
+        </p>
       </div>
 
       <div className="preference grid-preferences">

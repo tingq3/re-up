@@ -1,13 +1,26 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useFridge } from "@/lib/fridge-context";
 import Stepper from "../components/stepper";
 import RecipeCard from "../components/recipe-card";
 
+const INITIAL_VISIBLE = 8;
+const SHOW_MORE_STEP = 8;
+
 export default function ResultsPage() {
   const router = useRouter();
   const { recipes, loadingRecipes, relaxed } = useFridge();
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+
+  // A fresh search should re-collapse to the initial page size. Adjusting state
+  // during render (rather than in an effect) avoids an extra render pass.
+  const [renderedRecipes, setRenderedRecipes] = useState(recipes);
+  if (recipes !== renderedRecipes) {
+    setRenderedRecipes(recipes);
+    setVisibleCount(INITIAL_VISIBLE);
+  }
 
   return (
     <section className="content">
@@ -40,11 +53,23 @@ export default function ResultsPage() {
           </button>
         </div>
       ) : (
-        <div className="recipe-grid">
-          {recipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
-        </div>
+        <>
+          <div className="recipe-grid">
+            {recipes.slice(0, visibleCount).map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
+          </div>
+          {visibleCount < recipes.length && (
+            <div className="show-more">
+              <button
+                className="secondary"
+                onClick={() => setVisibleCount((current) => current + SHOW_MORE_STEP)}
+              >
+                Show more
+              </button>
+            </div>
+          )}
+        </>
       )}
 
       <div className="footer-actions">

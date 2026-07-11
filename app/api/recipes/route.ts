@@ -92,6 +92,7 @@ export async function POST(request: Request): Promise<Response> {
     category: body?.filters?.category ?? null,
     cuisine: body?.filters?.cuisine ?? null,
     maxTime: body?.filters?.maxTime ?? null,
+    allowPartial: body?.filters?.allowPartial ?? false,
   };
 
   try {
@@ -99,9 +100,10 @@ export async function POST(request: Request): Promise<Response> {
     return Response.json(result satisfies RecipesResponse);
   } catch (error) {
     console.error("Recipe matching failed, serving fallback:", error);
+    const fallback = filters.allowPartial ? FALLBACK : FALLBACK.filter((recipe) => recipe.missing.length === 0);
     return Response.json({
       relaxed: false,
-      recipes: FALLBACK.slice(0, filters.count),
+      recipes: fallback.slice(0, filters.count),
     } satisfies RecipesResponse);
   }
 }

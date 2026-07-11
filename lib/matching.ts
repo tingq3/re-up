@@ -2,8 +2,8 @@ import { supabase } from "./supabase";
 import type { Filters, RecipeMatch, RecipesResponse, Urgency, UserIngredient } from "./types";
 
 const URGENCY_WEIGHT: Record<Urgency, number> = { Urgent: 3, Soon: 2, Fresh: 1 };
-const MAX_MISSING = 3; // a recipe must be roughly cookable to show
-const RELAXED_MAX_MISSING = 6; // fallback tolerance when nothing matched
+const MAX_MISSING = 3; // a recipe must be roughly cookable to show, when partial matches are allowed
+const RELAXED_MAX_MISSING = 6; // fallback tolerance when nothing matched, when partial matches are allowed
 const COVERAGE_WEIGHT = 0.55; // "can I make it?"
 const URGENCY_SCORE_WEIGHT = 0.45; // "does it use the expiring stuff?"
 
@@ -128,23 +128,27 @@ export async function matchRecipes(
   const totalUrgencyWeight = [...userById.values()].reduce((sum, entry) => sum + entry.weight, 0);
   const hardDiet = (filters.diet ?? []).filter((diet) => HARD_DIETS.has(diet));
   const count = filters.count ?? 5;
+  // "Only what I can make" (default) means zero missing ingredients, at either pass.
+  const maxMissing = filters.allowPartial ? MAX_MISSING : 0;
+  const relaxedMaxMissing = filters.allowPartial ? RELAXED_MAX_MISSING : 0;
 
   // 2. Strict pass: all filters honoured.
   const strict = scoreCandidates(
     await fetchCandidates(ingredientIds, hardDiet, filters, false),
     userById,
     totalUrgencyWeight,
-    MAX_MISSING,
+    maxMissing,
     filters.diet ?? [],
   );
   if (strict.length > 0) return { relaxed: false, recipes: strict.slice(0, count) };
 
-  // 3. Fallback: keep diet/allergen hard, drop cuisine/category/time, tolerate more missing.
+  // 3. Fallback: keep diet/allergen hard, drop cuisine/category/time, tolerate more missing
+  // (only if partial matches are allowed — otherwise still require zero missing).
   const relaxedMatches = scoreCandidates(
     await fetchCandidates(ingredientIds, hardDiet, filters, true),
     userById,
     totalUrgencyWeight,
-    RELAXED_MAX_MISSING,
+    relaxedMaxMissing,
     filters.diet ?? [],
   );
   return { relaxed: true, recipes: relaxedMatches.slice(0, count) };

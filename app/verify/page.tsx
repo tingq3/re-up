@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { URGENCIES, useFridge } from "@/lib/fridge-context";
+import AddIngredient from "../components/add-ingredient";
 import Stepper from "../components/stepper";
 
 export default function VerifyPage() {
@@ -24,12 +25,17 @@ export default function VerifyPage() {
       <div className="section-heading">
         <div>
           <p className="eyebrow">HUMAN CHECK</p>
-          <h2>Does this look right?</h2>
-          <p>We found these in your fridge. Make any changes before we create your recipes.</p>
+          <h2>{ingredients.length === 0 ? "What's in your fridge?" : "Does this look right?"}</h2>
+          <p>
+            {ingredients.length === 0
+              ? "Add ingredients one by one using the button on the right."
+              : "We found these in your fridge. Make any changes before we create your recipes."}
+          </p>
         </div>
-        <button className="secondary" onClick={addIngredient}>
-          + Add ingredient
-        </button>
+        <AddIngredient
+          existingNames={ingredients.map((item) => item.name)}
+          onAdd={addIngredient}
+        />
       </div>
 
       {analysisNote && (
@@ -38,15 +44,24 @@ export default function VerifyPage() {
         </div>
       )}
 
-      <div className="notice">
-        ⚑{" "}
-        <span>
-          <b>
-            {urgentCount} ingredient{urgentCount === 1 ? "" : "s"} marked urgent.
-          </b>{" "}
-          We&apos;ll prioritise them in your recipe matches.
-        </span>
-      </div>
+      {ingredients.length > 0 && (
+        <div className="notice">
+          ⚑{" "}
+          <span>
+            <b>
+              {urgentCount} ingredient{urgentCount === 1 ? "" : "s"} marked urgent.
+            </b>{" "}
+            We&apos;ll prioritise them in your recipe matches.
+          </span>
+        </div>
+      )}
+
+      {ingredients.length === 0 && (
+        <div className="empty">
+          ◌<h3>No ingredients yet</h3>
+          <p>Use &ldquo;+ Add ingredient&rdquo; above to start building your list.</p>
+        </div>
+      )}
 
       <div className="ingredient-list">
         {ingredients.map((ingredient) => (
@@ -98,7 +113,11 @@ export default function VerifyPage() {
         <button className="text-button" onClick={() => router.push("/")}>
           ← Start over
         </button>
-        <button className="primary" onClick={() => router.push("/preferences")}>
+        <button
+          className="primary"
+          disabled={!ingredients.some((item) => item.available)}
+          onClick={() => router.push("/preferences")}
+        >
           Continue to preferences →
         </button>
       </div>

@@ -6,7 +6,7 @@ import { useFridge } from "@/lib/fridge-context";
 
 export default function UploadPage() {
   const router = useRouter();
-  const { analyzeImage, loadDemoFridge } = useFridge();
+  const { analyzeImage, loadDemoFridge, startBlankFridge } = useFridge();
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [dragging, setDragging] = useState(false);
@@ -32,6 +32,12 @@ export default function UploadPage() {
   const startDemo = () => {
     loadDemoFridge();
     router.push("/analyzing");
+  };
+
+  // No photo to analyse, so skip the vision step and go straight to a blank list.
+  const startManual = () => {
+    startBlankFridge();
+    router.push("/verify");
   };
 
   return (
@@ -94,6 +100,12 @@ export default function UploadPage() {
         </button>
         <button className="primary" onClick={turnIntoRecipe}>
           Turn into recipe <b>→</b>
+        </button>
+      </div>
+
+      <div className="text-link-row">
+        <button className="text-button" onClick={startManual}>
+          Or type in your ingredients instead →
         </button>
       </div>
     </section>

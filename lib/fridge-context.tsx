@@ -48,6 +48,10 @@ export const DIETARY = [
 
 export const MEAL_TYPES = ["Any", "Breakfast", "Lunch", "Dinner", "Snacks"];
 
+// How many scored matches to fetch per request. The results page shows a handful
+// up front and reveals more from this pool via "Show more" — no user-facing control.
+const RECIPE_FETCH_COUNT = 20;
+
 export const COOK_TIME_OPTIONS = [
   "Any",
   "Under 15 min",
@@ -76,7 +80,7 @@ type FridgeContextValue = {
   // Ingredients
   ingredients: Ingredient[];
   urgentCount: number;
-  addIngredient: () => void;
+  addIngredient: (name: string) => void;
   removeIngredient: (id: number) => void;
   toggleAvailable: (id: number) => void;
   setQuantity: (id: number, quantity: string) => void;
@@ -87,10 +91,9 @@ type FridgeContextValue = {
   analysisNote: string | null;
   analyzeImage: (file: File) => Promise<void>;
   loadDemoFridge: () => void;
+  startBlankFridge: () => void;
 
   // Preferences / filters
-  count: number;
-  setCount: (count: number) => void;
   dietary: string[];
   toggleDiet: (item: string) => void;
   mealType: string;
@@ -99,6 +102,8 @@ type FridgeContextValue = {
   setCookTime: (value: string) => void;
   cuisine: string;
   setCuisine: (value: string) => void;
+  allowPartial: boolean;
+  setAllowPartial: (value: boolean) => void;
 
   // Recipe results
   recipes: RecipeMatch[];
@@ -115,11 +120,11 @@ const FridgeContext = createContext<FridgeContextValue | null>(null);
 
 export function FridgeProvider({ children }: { children: ReactNode }) {
   const [ingredients, setIngredients] = useState<Ingredient[]>(INITIAL_INGREDIENTS);
-  const [count, setCount] = useState(3);
   const [dietary, setDietary] = useState<string[]>([]);
   const [mealType, setMealType] = useState("Any");
   const [cookTime, setCookTime] = useState("Any");
   const [cuisine, setCuisine] = useState("Any");
+  const [allowPartial, setAllowPartial] = useState(false);
   const [recipes, setRecipes] = useState<RecipeMatch[]>([]);
   const [loadingRecipes, setLoadingRecipes] = useState(false);
   const [relaxed, setRelaxed] = useState(false);
@@ -130,11 +135,22 @@ export function FridgeProvider({ children }: { children: ReactNode }) {
   const updateIngredient = (id: number, patch: Partial<Ingredient>) =>
     setIngredients((all) => all.map((item) => (item.id === id ? { ...item, ...patch } : item)));
 
-  const addIngredient = () =>
-    setIngredients((all) => [
-      ...all,
-      { id: Date.now(), name: "New ingredient", quantity: "1 item", days: 7, urgency: "Fresh", available: true },
-    ]);
+  // Add a canonical ingredient picked from the /verify catalogue. If it's already
+  // in the fridge, just make sure it's marked available instead of adding a duplicate
+  // row (duplicate rows would resolve to the same DB ingredient id anyway).
+  const addIngredient = (name: string) =>
+    setIngredients((all) => {
+      const existing = all.find((item) => item.name.toLowerCase() === name.toLowerCase());
+      if (existing) {
+        return existing.available
+          ? all
+          : all.map((item) => (item.id === existing.id ? { ...item, available: true } : item));
+      }
+      return [
+        { id: Date.now(), name, quantity: "1 item", days: 7, urgency: "Fresh", available: true },
+        ...all,
+      ];
+    });
 
   const removeIngredient = (id: number) =>
     setIngredients((all) => all.filter((item) => item.id !== id));
@@ -150,6 +166,12 @@ export function FridgeProvider({ children }: { children: ReactNode }) {
   // Load the built-in sample fridge (the "demo fridge" path and the analysis fallback).
   const loadDemoFridge = () => {
     setIngredients(INITIAL_INGREDIENTS);
+    setAnalysisNote(null);
+  };
+
+  // Start from an empty fridge for fully manual entry (no photo, no demo data).
+  const startBlankFridge = () => {
+    setIngredients([]);
     setAnalysisNote(null);
   };
 
@@ -201,12 +223,13 @@ export function FridgeProvider({ children }: { children: ReactNode }) {
           .filter((item) => item.available)
           .map((item) => ({ name: item.name, urgency: item.urgency })),
         filters: {
-          count,
+          count: RECIPE_FETCH_COUNT,
           diet: dietary,
           exclude: [] as string[],
           category: mealType === "Any" || mealType === "Snacks" ? null : mealType,
           cuisine: cuisine === "Any" ? null : cuisine,
           maxTime: COOK_TIME_MINUTES[cookTime] ?? null,
+          allowPartial,
         },
       };
       const response = await fetch("/api/recipes", {
@@ -236,8 +259,7 @@ export function FridgeProvider({ children }: { children: ReactNode }) {
     analysisNote,
     analyzeImage,
     loadDemoFridge,
-    count,
-    setCount,
+    startBlankFridge,
     dietary,
     toggleDiet,
     mealType,
@@ -246,6 +268,8 @@ export function FridgeProvider({ children }: { children: ReactNode }) {
     setCookTime,
     cuisine,
     setCuisine,
+    allowPartial,
+    setAllowPartial,
     recipes,
     loadingRecipes,
     relaxed,

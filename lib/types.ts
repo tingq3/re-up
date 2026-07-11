@@ -15,6 +15,7 @@ export type Filters = {
   category: string | null; // meal type, e.g. "Dinner"
   cuisine: string | null; // e.g. "Italian" (hard filter)
   maxTime: number | null; // max cooking time in minutes
+  allowPartial: boolean; // if false (default), only recipes with zero missing ingredients
 };
 
 export type RecipesRequest = {
@@ -44,6 +45,17 @@ export type RecipeMatch = {
 export type RecipesResponse = {
   relaxed: boolean; // true when filters were loosened to avoid an empty result
   recipes: RecipeMatch[];
+};
+
+// --- Canonical ingredient catalogue (for the "add ingredient" picker) ---
+
+export type CanonicalIngredient = {
+  id: number;
+  name: string;
+};
+
+export type IngredientsResponse = {
+  ingredients: CanonicalIngredient[];
 };
 
 // --- Fridge-photo vision (Gemini) ---
