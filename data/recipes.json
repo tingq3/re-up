@@ -1,0 +1,352 @@
+{
+  "ingredients": [
+    { "name": "spinach", "aliases": ["baby spinach", "spinach leaves"], "attributes": [] },
+    { "name": "chicken", "aliases": ["cooked chicken", "chicken breast", "chicken thigh"], "attributes": ["meat"] },
+    { "name": "milk", "aliases": ["whole milk"], "attributes": ["dairy"] },
+    { "name": "egg", "aliases": ["eggs"], "attributes": ["egg"] },
+    { "name": "cheddar", "aliases": ["cheddar cheese", "cheese"], "attributes": ["dairy"] },
+    { "name": "tomato", "aliases": ["tomatoes", "cherry tomatoes"], "attributes": [] },
+    { "name": "bell pepper", "aliases": ["bell peppers", "capsicum", "red pepper"], "attributes": [] },
+    { "name": "broccoli", "aliases": ["broccoli florets"], "attributes": [] },
+    { "name": "onion", "aliases": ["onions", "red onion"], "attributes": [] },
+    { "name": "garlic", "aliases": ["garlic cloves"], "attributes": [] },
+    { "name": "rice", "aliases": ["white rice", "cooked rice"], "attributes": [] },
+    { "name": "pasta", "aliases": ["spaghetti", "penne"], "attributes": ["gluten"] },
+    { "name": "butter", "aliases": [], "attributes": ["dairy"] },
+    { "name": "olive oil", "aliases": [], "attributes": [] },
+    { "name": "chickpeas", "aliases": ["garbanzo beans", "canned chickpeas"], "attributes": [] },
+    { "name": "black beans", "aliases": [], "attributes": [] },
+    { "name": "carrot", "aliases": ["carrots"], "attributes": [] },
+    { "name": "ginger", "aliases": ["fresh ginger"], "attributes": [] },
+    { "name": "soy sauce", "aliases": [], "attributes": ["gluten"] },
+    { "name": "coconut milk", "aliases": [], "attributes": [] },
+    { "name": "curry powder", "aliases": [], "attributes": [] },
+    { "name": "cumin", "aliases": ["ground cumin"], "attributes": [] },
+    { "name": "paprika", "aliases": ["smoked paprika"], "attributes": [] },
+    { "name": "parmesan", "aliases": ["parmesan cheese"], "attributes": ["dairy"] },
+    { "name": "mozzarella", "aliases": [], "attributes": ["dairy"] },
+    { "name": "tortilla", "aliases": ["tortillas", "flour tortilla"], "attributes": ["gluten"] },
+    { "name": "corn tortilla", "aliases": ["corn tortillas"], "attributes": [] },
+    { "name": "avocado", "aliases": ["avocados"], "attributes": [] },
+    { "name": "lime", "aliases": ["limes"], "attributes": [] },
+    { "name": "cilantro", "aliases": ["coriander"], "attributes": [] },
+    { "name": "salmon", "aliases": ["salmon fillet"], "attributes": ["fish"] },
+    { "name": "shrimp", "aliases": ["prawns"], "attributes": ["shellfish"] },
+    { "name": "lemon", "aliases": ["lemons"], "attributes": [] },
+    { "name": "spring onion", "aliases": ["scallions", "green onion"], "attributes": [] },
+    { "name": "mushroom", "aliases": ["mushrooms"], "attributes": [] },
+    { "name": "zucchini", "aliases": ["courgette"], "attributes": [] },
+    { "name": "basil", "aliases": ["fresh basil"], "attributes": [] },
+    { "name": "oats", "aliases": ["rolled oats"], "attributes": [] },
+    { "name": "banana", "aliases": ["bananas"], "attributes": [] },
+    { "name": "honey", "aliases": [], "attributes": ["honey"] },
+    { "name": "walnut", "aliases": ["walnuts"], "attributes": ["nuts"] },
+    { "name": "vegetable stock", "aliases": ["stock", "chicken stock", "broth"], "attributes": [] }
+  ],
+  "recipes": [
+    {
+      "name": "Chicken & Spinach Frittata",
+      "image_url": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 25, "servings": 4, "calories": 342, "protein": 29, "carbs": 6, "fat": 22,
+      "cuisine": "Italian", "category": "Dinner", "tags": ["High protein", "Low carb"],
+      "steps": [
+        "Heat an oven-safe pan and soften the onion with garlic.",
+        "Add chicken and spinach, cooking until the leaves wilt.",
+        "Whisk the eggs with half the cheddar, pour in, top with the rest and bake until set."
+      ],
+      "ingredients": [
+        { "name": "egg", "quantity": "6 large" },
+        { "name": "spinach", "quantity": "1 bag" },
+        { "name": "chicken", "quantity": "250 g" },
+        { "name": "cheddar", "quantity": "150 g" },
+        { "name": "onion", "quantity": "1", "optional": true },
+        { "name": "garlic", "quantity": "2 cloves", "optional": true }
+      ]
+    },
+    {
+      "name": "Garden Shakshuka",
+      "image_url": "https://images.unsplash.com/photo-1590412200988-a436970781fa?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 20, "servings": 3, "calories": 218, "protein": 14, "carbs": 18, "fat": 10,
+      "cuisine": "Middle Eastern", "category": "Breakfast", "tags": ["Vegetarian", "One pan"],
+      "steps": [
+        "Cook the onion and bell pepper until soft.",
+        "Simmer the tomatoes with cumin and paprika.",
+        "Fold in spinach, make wells, crack in the eggs and cook until the whites set."
+      ],
+      "ingredients": [
+        { "name": "egg", "quantity": "4" },
+        { "name": "tomato", "quantity": "4" },
+        { "name": "bell pepper", "quantity": "1" },
+        { "name": "spinach", "quantity": "2 handfuls" },
+        { "name": "onion", "quantity": "1" },
+        { "name": "cumin", "quantity": "1 tsp" },
+        { "name": "paprika", "quantity": "1 tsp" }
+      ]
+    },
+    {
+      "name": "Broccoli Cheddar Soup",
+      "image_url": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 30, "servings": 4, "calories": 285, "protein": 16, "carbs": 19, "fat": 16,
+      "cuisine": "American", "category": "Lunch", "tags": ["Comfort food", "Vegetarian"],
+      "steps": [
+        "Saute the onion and garlic in butter.",
+        "Add broccoli and stock, simmering until tender.",
+        "Blend, then stir through milk and cheddar over low heat."
+      ],
+      "ingredients": [
+        { "name": "broccoli", "quantity": "1 head" },
+        { "name": "cheddar", "quantity": "150 g" },
+        { "name": "milk", "quantity": "300 ml" },
+        { "name": "onion", "quantity": "1" },
+        { "name": "garlic", "quantity": "2 cloves", "optional": true },
+        { "name": "butter", "quantity": "2 tbsp" },
+        { "name": "vegetable stock", "quantity": "500 ml" }
+      ]
+    },
+    {
+      "name": "Creamy Chicken & Spinach Pasta",
+      "image_url": "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 25, "servings": 3, "calories": 520, "protein": 34, "carbs": 55, "fat": 18,
+      "cuisine": "Italian", "category": "Dinner", "tags": ["High protein", "Comfort food"],
+      "steps": [
+        "Cook the pasta until al dente.",
+        "Sear the chicken with garlic, then wilt in the spinach.",
+        "Stir in milk and parmesan to make a sauce and toss with the pasta."
+      ],
+      "ingredients": [
+        { "name": "pasta", "quantity": "250 g" },
+        { "name": "chicken", "quantity": "300 g" },
+        { "name": "spinach", "quantity": "1 bag" },
+        { "name": "milk", "quantity": "200 ml" },
+        { "name": "parmesan", "quantity": "50 g" },
+        { "name": "garlic", "quantity": "2 cloves", "optional": true }
+      ]
+    },
+    {
+      "name": "Chickpea Coconut Curry",
+      "image_url": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 30, "servings": 4, "calories": 410, "protein": 13, "carbs": 52, "fat": 18,
+      "cuisine": "Indian", "category": "Dinner", "tags": ["Vegan", "Gluten free"],
+      "steps": [
+        "Fry the onion, garlic and ginger with curry powder.",
+        "Add tomato, chickpeas and coconut milk, then simmer until thick.",
+        "Serve over rice."
+      ],
+      "ingredients": [
+        { "name": "chickpeas", "quantity": "1 can" },
+        { "name": "coconut milk", "quantity": "1 can" },
+        { "name": "tomato", "quantity": "2" },
+        { "name": "onion", "quantity": "1" },
+        { "name": "garlic", "quantity": "2 cloves" },
+        { "name": "ginger", "quantity": "1 thumb" },
+        { "name": "curry powder", "quantity": "2 tbsp" },
+        { "name": "rice", "quantity": "300 g", "optional": true }
+      ]
+    },
+    {
+      "name": "Chicken Fried Rice",
+      "image_url": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 20, "servings": 3, "calories": 430, "protein": 26, "carbs": 48, "fat": 14,
+      "cuisine": "Asian", "category": "Dinner", "tags": ["Quick", "One pan"],
+      "steps": [
+        "Scramble the eggs and set aside.",
+        "Stir-fry the chicken, carrot and bell pepper over high heat.",
+        "Add rice and soy sauce, fold the egg and spring onion back in."
+      ],
+      "ingredients": [
+        { "name": "rice", "quantity": "400 g cooked" },
+        { "name": "chicken", "quantity": "250 g" },
+        { "name": "egg", "quantity": "2" },
+        { "name": "carrot", "quantity": "1" },
+        { "name": "bell pepper", "quantity": "1" },
+        { "name": "soy sauce", "quantity": "3 tbsp" },
+        { "name": "spring onion", "quantity": "2", "optional": true }
+      ]
+    },
+    {
+      "name": "Cheese Omelette",
+      "image_url": "https://images.unsplash.com/photo-1510693206972-df098062cb71?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 10, "servings": 1, "calories": 320, "protein": 21, "carbs": 3, "fat": 25,
+      "cuisine": "French", "category": "Breakfast", "tags": ["Quick", "Low carb"],
+      "steps": [
+        "Whisk the eggs with a splash of milk.",
+        "Pour into foaming butter and cook gently.",
+        "Scatter cheddar over one half and fold."
+      ],
+      "ingredients": [
+        { "name": "egg", "quantity": "3" },
+        { "name": "cheddar", "quantity": "50 g" },
+        { "name": "butter", "quantity": "1 tbsp" },
+        { "name": "milk", "quantity": "1 splash", "optional": true }
+      ]
+    },
+    {
+      "name": "Black Bean Tacos",
+      "image_url": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 15, "servings": 2, "calories": 360, "protein": 12, "carbs": 54, "fat": 11,
+      "cuisine": "Mexican", "category": "Lunch", "tags": ["Vegan", "Gluten free"],
+      "steps": [
+        "Warm the black beans with cumin.",
+        "Char the corn tortillas.",
+        "Fill with beans, avocado, tomato and a squeeze of lime and cilantro."
+      ],
+      "ingredients": [
+        { "name": "black beans", "quantity": "1 can" },
+        { "name": "corn tortilla", "quantity": "6" },
+        { "name": "avocado", "quantity": "1" },
+        { "name": "tomato", "quantity": "1" },
+        { "name": "lime", "quantity": "1" },
+        { "name": "cilantro", "quantity": "handful", "optional": true },
+        { "name": "cumin", "quantity": "1 tsp", "optional": true }
+      ]
+    },
+    {
+      "name": "Stuffed Peppers Caprese",
+      "image_url": "https://images.unsplash.com/photo-1600335895229-6e75511892c8?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 40, "servings": 2, "calories": 300, "protein": 14, "carbs": 30, "fat": 13,
+      "cuisine": "Italian", "category": "Dinner", "tags": ["Vegetarian", "Gluten free"],
+      "steps": [
+        "Halve and deseed the bell peppers.",
+        "Fill with rice, tomato and mozzarella.",
+        "Bake until soft and finish with fresh basil."
+      ],
+      "ingredients": [
+        { "name": "bell pepper", "quantity": "2" },
+        { "name": "tomato", "quantity": "2" },
+        { "name": "mozzarella", "quantity": "125 g" },
+        { "name": "rice", "quantity": "150 g cooked" },
+        { "name": "basil", "quantity": "handful", "optional": true },
+        { "name": "olive oil", "quantity": "1 tbsp", "optional": true }
+      ]
+    },
+    {
+      "name": "Broccoli Ginger Stir-fry",
+      "image_url": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 15, "servings": 2, "calories": 260, "protein": 9, "carbs": 40, "fat": 7,
+      "cuisine": "Asian", "category": "Dinner", "tags": ["Vegan", "Quick"],
+      "steps": [
+        "Stir-fry the broccoli and carrot over high heat.",
+        "Add garlic, ginger and soy sauce.",
+        "Serve over rice."
+      ],
+      "ingredients": [
+        { "name": "broccoli", "quantity": "1 head" },
+        { "name": "carrot", "quantity": "1" },
+        { "name": "garlic", "quantity": "2 cloves" },
+        { "name": "ginger", "quantity": "1 thumb" },
+        { "name": "soy sauce", "quantity": "2 tbsp" },
+        { "name": "rice", "quantity": "300 g", "optional": true }
+      ]
+    },
+    {
+      "name": "Salmon & Veg Traybake",
+      "image_url": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 30, "servings": 2, "calories": 440, "protein": 34, "carbs": 16, "fat": 27,
+      "cuisine": "Mediterranean", "category": "Dinner", "tags": ["High protein", "Gluten free"],
+      "steps": [
+        "Scatter zucchini, tomato and bell pepper on a tray with olive oil.",
+        "Nestle the salmon on top and squeeze over lemon.",
+        "Roast until the salmon flakes."
+      ],
+      "ingredients": [
+        { "name": "salmon", "quantity": "2 fillets" },
+        { "name": "zucchini", "quantity": "1" },
+        { "name": "tomato", "quantity": "2" },
+        { "name": "bell pepper", "quantity": "1" },
+        { "name": "lemon", "quantity": "1" },
+        { "name": "olive oil", "quantity": "2 tbsp", "optional": true }
+      ]
+    },
+    {
+      "name": "Garlic Butter Shrimp",
+      "image_url": "https://images.unsplash.com/photo-1633504581786-316c8002b1b9?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 15, "servings": 2, "calories": 290, "protein": 28, "carbs": 4, "fat": 18,
+      "cuisine": "Seafood", "category": "Dinner", "tags": ["Low carb", "Quick"],
+      "steps": [
+        "Melt the butter and soften the garlic.",
+        "Add the shrimp and cook until pink.",
+        "Finish with lemon and spring onion."
+      ],
+      "ingredients": [
+        { "name": "shrimp", "quantity": "300 g" },
+        { "name": "garlic", "quantity": "3 cloves" },
+        { "name": "butter", "quantity": "3 tbsp" },
+        { "name": "lemon", "quantity": "1" },
+        { "name": "spring onion", "quantity": "2", "optional": true }
+      ]
+    },
+    {
+      "name": "Banana Oat Pancakes",
+      "image_url": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 15, "servings": 2, "calories": 330, "protein": 13, "carbs": 48, "fat": 9,
+      "cuisine": "American", "category": "Breakfast", "tags": ["Vegetarian", "Gluten free"],
+      "steps": [
+        "Blend the banana, oats, egg and milk into a batter.",
+        "Ladle into a hot non-stick pan.",
+        "Flip when bubbles form and cook through."
+      ],
+      "ingredients": [
+        { "name": "banana", "quantity": "2" },
+        { "name": "oats", "quantity": "100 g" },
+        { "name": "egg", "quantity": "2" },
+        { "name": "milk", "quantity": "100 ml" }
+      ]
+    },
+    {
+      "name": "Overnight Oats with Walnuts",
+      "image_url": "https://images.unsplash.com/photo-1517673400267-0251440c45dc?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 5, "servings": 1, "calories": 380, "protein": 12, "carbs": 55, "fat": 14,
+      "cuisine": "American", "category": "Breakfast", "tags": ["Vegetarian", "No cook"],
+      "steps": [
+        "Stir the oats into the milk with a drizzle of honey.",
+        "Chill overnight.",
+        "Top with banana and walnuts before eating."
+      ],
+      "ingredients": [
+        { "name": "oats", "quantity": "80 g" },
+        { "name": "milk", "quantity": "150 ml" },
+        { "name": "banana", "quantity": "1" },
+        { "name": "honey", "quantity": "1 tbsp", "optional": true },
+        { "name": "walnut", "quantity": "handful", "optional": true }
+      ]
+    },
+    {
+      "name": "Minestrone Soup",
+      "image_url": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 35, "servings": 4, "calories": 300, "protein": 12, "carbs": 50, "fat": 6,
+      "cuisine": "Italian", "category": "Lunch", "tags": ["Vegan", "Comfort food"],
+      "steps": [
+        "Soften the onion, carrot and garlic.",
+        "Add tomato, chickpeas, stock and pasta.",
+        "Simmer until the pasta is tender, then stir in spinach."
+      ],
+      "ingredients": [
+        { "name": "pasta", "quantity": "150 g" },
+        { "name": "tomato", "quantity": "3" },
+        { "name": "carrot", "quantity": "2" },
+        { "name": "onion", "quantity": "1" },
+        { "name": "garlic", "quantity": "2 cloves" },
+        { "name": "chickpeas", "quantity": "1 can" },
+        { "name": "spinach", "quantity": "2 handfuls" },
+        { "name": "vegetable stock", "quantity": "1 litre" }
+      ]
+    },
+    {
+      "name": "Mushroom Spinach Quesadilla",
+      "image_url": "https://images.unsplash.com/photo-1618040996337-56904b7850b9?auto=format&fit=crop&w=1000&q=80",
+      "time_minutes": 15, "servings": 2, "calories": 400, "protein": 18, "carbs": 42, "fat": 18,
+      "cuisine": "Mexican", "category": "Lunch", "tags": ["Vegetarian", "Quick"],
+      "steps": [
+        "Saute the mushrooms until golden and wilt in the spinach.",
+        "Fill a tortilla with the mix and cheddar.",
+        "Toast in a dry pan until crisp and the cheese melts."
+      ],
+      "ingredients": [
+        { "name": "tortilla", "quantity": "2" },
+        { "name": "mushroom", "quantity": "150 g" },
+        { "name": "spinach", "quantity": "2 handfuls" },
+        { "name": "cheddar", "quantity": "80 g" }
+      ]
+    }
+  ]
+}
