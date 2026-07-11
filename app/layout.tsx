@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { FridgeProvider } from "@/lib/fridge-context";
+import TopBar from "./components/top-bar";
 
 export const metadata: Metadata = {
   title: "PrepFridge — Cook what you have",
@@ -13,7 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body>
+        <FridgeProvider>
+          <TopBar />
+          <main>{children}</main>
+        </FridgeProvider>
+      </body>
     </html>
   );
 }

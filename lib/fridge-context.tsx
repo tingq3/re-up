@@ -1,0 +1,223 @@
+"use client";
+
+// Client-side store shared across every route in the flow.
+// Mounted once in the root layout, so navigating between /verify, /preferences,
+// /results, etc. preserves the fridge without any persistence (matches the
+// "fridge held in state, not persisted" design in CLAUDE.md).
+
+import {
+  createContext,
+  useContext,
+  useState,
+  type ReactNode,
+} from "react";
+import type { RecipeMatch, Urgency } from "@/lib/types";
+
+export type Ingredient = {
+  id: number;
+  name: string;
+  quantity: string;
+  days: number;
+  urgency: Urgency;
+  available: boolean;
+};
+
+export const URGENCIES: Urgency[] = ["Urgent", "Soon", "Fresh"];
+
+export const CUISINES = [
+  "Any",
+  "Italian",
+  "Middle Eastern",
+  "American",
+  "Indian",
+  "Asian",
+  "French",
+  "Mexican",
+  "Mediterranean",
+  "Seafood",
+];
+
+export const DIETARY = [
+  "Vegetarian",
+  "Vegan",
+  "Gluten-free",
+  "Dairy-free",
+  "High-protein",
+  "Low-carb",
+];
+
+export const MEAL_TYPES = ["Any", "Breakfast", "Lunch", "Dinner", "Snacks"];
+
+export const COOK_TIME_OPTIONS = [
+  "Any",
+  "Under 15 min",
+  "Under 30 min",
+  "Under 1 hour",
+];
+
+const COOK_TIME_MINUTES: Record<string, number> = {
+  "Under 15 min": 15,
+  "Under 30 min": 30,
+  "Under 1 hour": 60,
+};
+
+const INITIAL_INGREDIENTS: Ingredient[] = [
+  { id: 1, name: "Baby spinach", quantity: "1 bag", days: 1, urgency: "Urgent", available: true },
+  { id: 2, name: "Cooked chicken", quantity: "250 g", days: 1, urgency: "Urgent", available: true },
+  { id: 3, name: "Milk", quantity: "400 ml", days: 3, urgency: "Soon", available: true },
+  { id: 4, name: "Eggs", quantity: "6 large", days: 14, urgency: "Fresh", available: true },
+  { id: 5, name: "Cheddar", quantity: "150 g", days: 21, urgency: "Fresh", available: true },
+  { id: 6, name: "Tomatoes", quantity: "3 medium", days: 4, urgency: "Soon", available: true },
+  { id: 7, name: "Bell pepper", quantity: "2", days: 7, urgency: "Fresh", available: true },
+  { id: 8, name: "Broccoli", quantity: "1 head", days: 5, urgency: "Soon", available: true },
+];
+
+type FridgeContextValue = {
+  // Ingredients
+  ingredients: Ingredient[];
+  urgentCount: number;
+  addIngredient: () => void;
+  removeIngredient: (id: number) => void;
+  toggleAvailable: (id: number) => void;
+  setQuantity: (id: number, quantity: string) => void;
+  setUrgency: (id: number, urgency: Urgency) => void;
+
+  // Preferences / filters
+  count: number;
+  setCount: (count: number) => void;
+  dietary: string[];
+  toggleDiet: (item: string) => void;
+  mealType: string;
+  setMealType: (value: string) => void;
+  cookTime: string;
+  setCookTime: (value: string) => void;
+  cuisine: string;
+  setCuisine: (value: string) => void;
+
+  // Recipe results
+  recipes: RecipeMatch[];
+  loadingRecipes: boolean;
+  relaxed: boolean;
+  findRecipes: () => Promise<void>;
+
+  // Favourites
+  saved: number[];
+  toggleSaved: (id: number) => void;
+};
+
+const FridgeContext = createContext<FridgeContextValue | null>(null);
+
+export function FridgeProvider({ children }: { children: ReactNode }) {
+  const [ingredients, setIngredients] = useState<Ingredient[]>(INITIAL_INGREDIENTS);
+  const [count, setCount] = useState(3);
+  const [dietary, setDietary] = useState<string[]>([]);
+  const [mealType, setMealType] = useState("Any");
+  const [cookTime, setCookTime] = useState("Any");
+  const [cuisine, setCuisine] = useState("Any");
+  const [recipes, setRecipes] = useState<RecipeMatch[]>([]);
+  const [loadingRecipes, setLoadingRecipes] = useState(false);
+  const [relaxed, setRelaxed] = useState(false);
+  const [saved, setSaved] = useState<number[]>([]);
+
+  const updateIngredient = (id: number, patch: Partial<Ingredient>) =>
+    setIngredients((all) => all.map((item) => (item.id === id ? { ...item, ...patch } : item)));
+
+  const addIngredient = () =>
+    setIngredients((all) => [
+      ...all,
+      { id: Date.now(), name: "New ingredient", quantity: "1 item", days: 7, urgency: "Fresh", available: true },
+    ]);
+
+  const removeIngredient = (id: number) =>
+    setIngredients((all) => all.filter((item) => item.id !== id));
+
+  const toggleAvailable = (id: number) => {
+    const current = ingredients.find((item) => item.id === id);
+    if (current) updateIngredient(id, { available: !current.available });
+  };
+
+  const setQuantity = (id: number, quantity: string) => updateIngredient(id, { quantity });
+  const setUrgency = (id: number, urgency: Urgency) => updateIngredient(id, { urgency });
+
+  const urgentCount = ingredients.filter(
+    (item) => item.available && item.urgency === "Urgent",
+  ).length;
+
+  const toggleDiet = (item: string) =>
+    setDietary((current) =>
+      current.includes(item) ? current.filter((value) => value !== item) : [...current, item],
+    );
+
+  const toggleSaved = (id: number) =>
+    setSaved((current) =>
+      current.includes(id) ? current.filter((value) => value !== id) : [...current, id],
+    );
+
+  const findRecipes = async () => {
+    setLoadingRecipes(true);
+    setRelaxed(false);
+    try {
+      const payload = {
+        ingredients: ingredients
+          .filter((item) => item.available)
+          .map((item) => ({ name: item.name, urgency: item.urgency })),
+        filters: {
+          count,
+          diet: dietary,
+          exclude: [] as string[],
+          category: mealType === "Any" || mealType === "Snacks" ? null : mealType,
+          cuisine: cuisine === "Any" ? null : cuisine,
+          maxTime: COOK_TIME_MINUTES[cookTime] ?? null,
+        },
+      };
+      const response = await fetch("/api/recipes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      setRecipes(data.recipes ?? []);
+      setRelaxed(Boolean(data.relaxed));
+    } catch {
+      setRecipes([]);
+    } finally {
+      setLoadingRecipes(false);
+    }
+  };
+
+  const value: FridgeContextValue = {
+    ingredients,
+    urgentCount,
+    addIngredient,
+    removeIngredient,
+    toggleAvailable,
+    setQuantity,
+    setUrgency,
+    count,
+    setCount,
+    dietary,
+    toggleDiet,
+    mealType,
+    setMealType,
+    cookTime,
+    setCookTime,
+    cuisine,
+    setCuisine,
+    recipes,
+    loadingRecipes,
+    relaxed,
+    findRecipes,
+    saved,
+    toggleSaved,
+  };
+
+  return <FridgeContext.Provider value={value}>{children}</FridgeContext.Provider>;
+}
+
+export function useFridge() {
+  const context = useContext(FridgeContext);
+  if (!context) {
+    throw new Error("useFridge must be used within a FridgeProvider");
+  }
+  return context;
+}
