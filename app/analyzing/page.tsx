@@ -2,17 +2,21 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useFridge } from "@/lib/fridge-context";
 
-// Transient "AI vision at work" screen. Simulates the fridge-photo analysis,
-// then forwards to the ingredient check. (Gemini vision is not wired up yet —
-// see the follow-ups in CLAUDE.md.)
+// "AI vision at work" screen shown while the fridge photo is analysed by Gemini
+// (see lib/vision.ts). Forwards to the ingredient check once analysis settles; the
+// demo path (no analysis in flight) simply forwards after the minimum display time.
 export default function AnalyzingPage() {
   const router = useRouter();
+  const { analyzing } = useFridge();
 
   useEffect(() => {
-    const timer = window.setTimeout(() => router.replace("/verify"), 1300);
+    if (analyzing) return;
+    // Small min-display so a fast/instant result doesn't flash the spinner.
+    const timer = window.setTimeout(() => router.replace("/verify"), 400);
     return () => window.clearTimeout(timer);
-  }, [router]);
+  }, [analyzing, router]);
 
   return (
     <section className="analyzing">

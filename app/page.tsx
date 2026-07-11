@@ -2,20 +2,37 @@
 
 import { type ChangeEvent, type DragEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useFridge } from "@/lib/fridge-context";
 
 export default function UploadPage() {
   const router = useRouter();
+  const { analyzeImage, loadDemoFridge } = useFridge();
   const [preview, setPreview] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [dragging, setDragging] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const selectFile = (file?: File) => {
-    if (file?.type.startsWith("image/")) {
-      setPreview(URL.createObjectURL(file));
+  const selectFile = (chosen?: File) => {
+    if (chosen?.type.startsWith("image/")) {
+      setFile(chosen);
+      setPreview(URL.createObjectURL(chosen));
     }
   };
 
-  const startAnalysis = () => router.push("/analyzing");
+  // With a photo, run Gemini analysis; without one, fall back to the sample fridge.
+  const turnIntoRecipe = () => {
+    if (file) {
+      void analyzeImage(file);
+    } else {
+      loadDemoFridge();
+    }
+    router.push("/analyzing");
+  };
+
+  const startDemo = () => {
+    loadDemoFridge();
+    router.push("/analyzing");
+  };
 
   return (
     <section className="upload-page">
@@ -72,10 +89,10 @@ export default function UploadPage() {
       </div>
 
       <div className="upload-actions">
-        <button className="secondary" onClick={startAnalysis}>
+        <button className="secondary" onClick={startDemo}>
           ♨ Use demo fridge
         </button>
-        <button className="primary" onClick={startAnalysis}>
+        <button className="primary" onClick={turnIntoRecipe}>
           Turn into recipe <b>→</b>
         </button>
       </div>

@@ -45,3 +45,20 @@ export type RecipesResponse = {
   relaxed: boolean; // true when filters were loosened to avoid an empty result
   recipes: RecipeMatch[];
 };
+
+// --- Fridge-photo vision (Gemini) ---
+
+/** Urgency vocabulary the vision model returns, before mapping to the app's `Urgency`. */
+export type VisionUrgency = "fresh" | "mid" | "close_to_expired";
+
+/** Shape returned by /api/analyze — already mapped to the app's urgency vocab. */
+export type AnalyzedIngredient = {
+  name: string;
+  quantity: string;
+  urgency: Urgency;
+  days: number;
+};
+
+export type AnalyzeResponse = {
+  ingredients: AnalyzedIngredient[];
+};

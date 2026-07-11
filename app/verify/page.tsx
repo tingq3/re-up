@@ -9,6 +9,7 @@ export default function VerifyPage() {
   const {
     ingredients,
     urgentCount,
+    analysisNote,
     addIngredient,
     removeIngredient,
     toggleAvailable,
@@ -30,6 +31,12 @@ export default function VerifyPage() {
           + Add ingredient
         </button>
       </div>
+
+      {analysisNote && (
+        <div className="notice">
+          ⚑ <span>{analysisNote}</span>
+        </div>
+      )}
 
       <div className="notice">
         ⚑{" "}

@@ -40,13 +40,7 @@ const ai = new GoogleGenAI({
   apiKey,
 });
 
-try {
-  const interaction = await ai.interactions.create({
-    model: "gemini-3.5-flash",
-    input: [
-      {
-        type: "text",
-        text: `
+const prompt = `
 Identify all clearly visible edible ingredients in this fridge image.
 
 Return only the ingredient name, estimated visible quantity, and estimated urgency.
@@ -77,18 +71,22 @@ Return JSON in exactly this structure:
     }
   ]
 }
-        `.trim(),
-      },
+`.trim();
+
+try {
+  const response = await ai.models.generateContent({
+    model: process.env.GEMINI_MODEL ?? "gemini-2.5-flash",
+    contents: [
       {
-        type: "image",
-        data: imageData,
-        mime_type: mimeType,
+        role: "user",
+        parts: [{ text: prompt }, { inlineData: { mimeType, data: imageData } }],
       },
     ],
+    config: { responseMimeType: "application/json" },
   });
 
   console.log("\nGemini result:\n");
-  console.log(interaction.output_text);
+  console.log(response.text);
 } catch (error) {
   console.error("\nGemini request failed:");
   console.error(error);

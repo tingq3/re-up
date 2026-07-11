@@ -11,7 +11,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { RecipeMatch, Urgency } from "@/lib/types";
+import type { AnalyzedIngredient, RecipeMatch, Urgency } from "@/lib/types";
 
 export type Ingredient = {
   id: number;
@@ -82,6 +82,12 @@ type FridgeContextValue = {
   setQuantity: (id: number, quantity: string) => void;
   setUrgency: (id: number, urgency: Urgency) => void;
 
+  // Fridge-photo analysis
+  analyzing: boolean;
+  analysisNote: string | null;
+  analyzeImage: (file: File) => Promise<void>;
+  loadDemoFridge: () => void;
+
   // Preferences / filters
   count: number;
   setCount: (count: number) => void;
@@ -118,6 +124,8 @@ export function FridgeProvider({ children }: { children: ReactNode }) {
   const [loadingRecipes, setLoadingRecipes] = useState(false);
   const [relaxed, setRelaxed] = useState(false);
   const [saved, setSaved] = useState<number[]>([]);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [analysisNote, setAnalysisNote] = useState<string | null>(null);
 
   const updateIngredient = (id: number, patch: Partial<Ingredient>) =>
     setIngredients((all) => all.map((item) => (item.id === id ? { ...item, ...patch } : item)));
@@ -138,6 +146,37 @@ export function FridgeProvider({ children }: { children: ReactNode }) {
 
   const setQuantity = (id: number, quantity: string) => updateIngredient(id, { quantity });
   const setUrgency = (id: number, urgency: Urgency) => updateIngredient(id, { urgency });
+
+  // Load the built-in sample fridge (the "demo fridge" path and the analysis fallback).
+  const loadDemoFridge = () => {
+    setIngredients(INITIAL_INGREDIENTS);
+    setAnalysisNote(null);
+  };
+
+  // Send a fridge photo to Gemini (via /api/analyze) and replace the fridge with what
+  // it detected. On any failure, fall back to the sample fridge with a note so the flow
+  // never dead-ends.
+  const analyzeImage = async (file: File) => {
+    setAnalyzing(true);
+    setAnalysisNote(null);
+    try {
+      const form = new FormData();
+      form.append("image", file);
+      const response = await fetch("/api/analyze", { method: "POST", body: form });
+      if (!response.ok) throw new Error(`analyze failed: ${response.status}`);
+      const data = (await response.json()) as { ingredients?: AnalyzedIngredient[] };
+      const detected = data.ingredients ?? [];
+      if (detected.length === 0) throw new Error("no ingredients detected");
+      setIngredients(
+        detected.map((item, index) => ({ id: Date.now() + index, available: true, ...item })),
+      );
+    } catch {
+      setIngredients(INITIAL_INGREDIENTS);
+      setAnalysisNote("We couldn't read that photo — here's a sample fridge to edit.");
+    } finally {
+      setAnalyzing(false);
+    }
+  };
 
   const urgentCount = ingredients.filter(
     (item) => item.available && item.urgency === "Urgent",
@@ -193,6 +232,10 @@ export function FridgeProvider({ children }: { children: ReactNode }) {
     toggleAvailable,
     setQuantity,
     setUrgency,
+    analyzing,
+    analysisNote,
+    analyzeImage,
+    loadDemoFridge,
     count,
     setCount,
     dietary,
