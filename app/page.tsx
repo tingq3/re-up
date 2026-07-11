@@ -1,101 +1,65 @@
 import { supabase } from "@/lib/supabase";
 
 export default async function Home() {
-  // Fetch categories
-  const { data: categories, error: categoryError } = await supabase
-    .from("categories")
-    .select("*")
-    .order("id");
+  const { data: ingredients } = await supabase
+    .from("ingredients")
+    .select("id, name, category, average_expiry_days");
 
-  // Fetch products
-  const { data: products, error: productError } = await supabase
-    .from("products")
-    .select(`
-      *,
-      categories(name),
-      conditions(name)
-    `)
-    .order("created_at", { ascending: false });
+  const { data: recipes } = await supabase
+    .from("recipes")
+    .select("id, title, difficulty, prep_minutes, cook_minutes");
 
   return (
-    <main className="max-w-5xl mx-auto p-10">
+    <main className="min-h-screen bg-gray-100 p-10">
       <h1 className="text-4xl font-bold mb-8">
-        Electronics Marketplace
+        🥦 Fridge Recipe AI Database Test
       </h1>
 
-      {/* Errors */}
-      {categoryError && (
-        <p className="text-red-500">
-          Categories Error: {categoryError.message}
-        </p>
-      )}
+      {/* Ingredients */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>
 
-      {productError && (
-        <p className="text-red-500">
-          Products Error: {productError.message}
-        </p>
-      )}
-
-      {/* Categories */}
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-4">
-          Categories
-        </h2>
-
-        <ul className="space-y-2">
-          {categories?.map((category) => (
-            <li
-              key={category.id}
-              className="border rounded p-3"
+        <div className="grid grid-cols-3 gap-4">
+          {ingredients?.map((ingredient: {
+            id: string;
+            name: string;
+            category: string;
+            average_expiry_days: number;
+          }) => (
+            <div
+              key={ingredient.id}
+              className="rounded-lg bg-white p-4 shadow"
             >
-              {category.id}. {category.name}
-            </li>
+              <h3 className="font-bold">{ingredient.name}</h3>
+              <p>{ingredient.category}</p>
+              <p>{ingredient.average_expiry_days} days</p>
+            </div>
           ))}
-        </ul>
+        </div>
       </section>
 
-      {/* Products */}
+      {/* Recipes */}
       <section>
-        <h2 className="text-2xl font-semibold mb-4">
-          Products
-        </h2>
+        <h2 className="text-2xl font-semibold mb-4">Recipes</h2>
 
-        {products?.length === 0 && (
-          <p>No products found.</p>
-        )}
-
-        <div className="grid gap-4">
-          {products?.map((product) => (
+        <div className="grid grid-cols-2 gap-4">
+          {recipes?.map((recipe: {
+            id: string;
+            title: string;
+            difficulty: string;
+            prep_minutes: number;
+            cook_minutes: number;
+          }) => (
             <div
-              key={product.id}
-              className="border rounded-lg p-5 shadow-sm"
+              key={recipe.id}
+              className="rounded-lg bg-white p-4 shadow"
             >
-              <h3 className="text-xl font-bold">
-                {product.title}
-              </h3>
+              <h3 className="font-bold">{recipe.title}</h3>
 
-              <p className="text-gray-600">
-                {product.brand} {product.model}
-              </p>
-
-              <p className="mt-2">
-                ${product.price}
-              </p>
+              <p>Difficulty: {recipe.difficulty}</p>
 
               <p>
-                Category: {product.categories?.name}
-              </p>
-
-              <p>
-                Condition: {product.conditions?.name}
-              </p>
-
-              <p className="mt-2">
-                {product.description}
-              </p>
-
-              <p className="text-sm text-gray-500 mt-2">
-                {product.suburb}, {product.state}
+                ⏱ {recipe.prep_minutes} min | 🍳 {recipe.cook_minutes} min
               </p>
             </div>
           ))}
