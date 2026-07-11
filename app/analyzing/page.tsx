@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Sparkles } from "lucide-react";
 import { useFridge } from "@/lib/fridge-context";
 
 // "AI vision at work" screen shown while the fridge photo is analysed by Gemini
@@ -19,13 +20,19 @@ export default function AnalyzingPage() {
   }, [analyzing, router]);
 
   return (
-    <section className="analyzing">
-      <div className="pulse">✦</div>
-      <p className="eyebrow">AI VISION AT WORK</p>
-      <h1>Looking inside your fridge…</h1>
-      <p>Identifying ingredients, quantities, and the things that need using soon.</p>
-      <div className="progress">
-        <i />
+    <section className="px-6 py-[150px] text-center">
+      <div className="mx-auto mb-6 grid h-[68px] w-[68px] place-items-center rounded-[23px] bg-pale text-leaf animate-[throb_1s_infinite_alternate]">
+        <Sparkles size={28} />
+      </div>
+      <p className="mb-3 text-[11px] font-bold tracking-[0.13em] text-leaf">AI VISION AT WORK</p>
+      <h1 className="text-[45px] leading-[1.05] font-bold tracking-[-0.045em]">
+        Looking inside your fridge…
+      </h1>
+      <p className="text-muted">
+        Identifying ingredients, quantities, and the things that need using soon.
+      </p>
+      <div className="mx-auto my-8 h-[7px] w-[260px] overflow-hidden rounded-[9px] bg-ash-300">
+        <i className="block h-full w-[65%] rounded-[inherit] bg-leaf animate-[progress_1.3s_ease-in-out_infinite]" />
       </div>
     </section>
   );

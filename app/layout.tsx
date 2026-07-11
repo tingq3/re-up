@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import { FridgeProvider } from "@/lib/fridge-context";
 import TopBar from "./components/top-bar";
+
+const geist = Geist({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "PrepFridge — Cook what you have",
@@ -14,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={geist.className}>
+      <body className="bg-cream text-ink">
         <FridgeProvider>
           <TopBar />
           <main>{children}</main>
