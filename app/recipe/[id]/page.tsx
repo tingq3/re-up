@@ -1,13 +1,13 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Check, Circle, CircleDashed, Clock, Heart } from "lucide-react";
+import { ArrowLeft, Check, Circle, CircleDashed, Clock, Heart, Sparkles } from "lucide-react";
 import { useFridge } from "@/lib/fridge-context";
 
 export default function RecipeDetailPage() {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
-  const { recipes, saved, toggleSaved } = useFridge();
+  const { recipes, saved, toggleSaved, cooked, markCooked } = useFridge();
 
   const recipe = recipes.find((item) => item.id === Number(id));
 
@@ -33,6 +33,7 @@ export default function RecipeDetailPage() {
   }
 
   const isSaved = saved.includes(recipe.id);
+  const isCooked = cooked.includes(recipe.id);
 
   return (
     <section className="mx-auto w-[min(1050px,calc(100%-48px))] pt-12 pb-20 max-[700px]:w-[min(100%-32px,1050px)]">
@@ -70,6 +71,12 @@ export default function RecipeDetailPage() {
           <Heart size={14} fill={isSaved ? "currentColor" : "none"} />
           {isSaved ? "Saved" : "Save recipe"}
         </button>
+        <button
+          className={`inline-flex items-center gap-2 rounded-[9px] border px-[14px] py-[10px] whitespace-nowrap ${isCooked ? "border-leaf bg-pale text-leaf" : "border-leaf bg-leaf text-white hover:bg-[#1d614d]"}`}
+          onClick={() => markCooked(recipe.id)}
+        >
+          <Sparkles size={14} /> {isCooked ? "Impact recorded" : "Cooked this"}
+        </button>
       </div>
 
       <div className="mt-12 grid grid-cols-[1.55fr_0.85fr] gap-12 max-[700px]:grid-cols-1 max-[700px]:gap-[35px]">
@@ -91,6 +98,7 @@ export default function RecipeDetailPage() {
           <h3 className="text-[23px] font-bold">
             Nutrition <small className="text-[11px] text-muted">per serving</small>
           </h3>
+          <p className="mb-3 text-xs text-muted">Calculated from the recipe&apos;s ingredient amounts · {recipe.servings} servings</p>
           <div className="flex items-center gap-5">
             <b className="text-[30px] font-bold text-leaf">
               {recipe.calories}
@@ -118,6 +126,12 @@ export default function RecipeDetailPage() {
               <Check size={14} /> {item}
             </p>
           ))}
+
+          {recipe.ingredients.length > 0 && (
+            <p className="mt-4 text-xs text-muted">
+              Quantities used: {recipe.ingredients.map((item) => `${item.name} (${item.quantity ?? `${item.quantityGrams} g`})`).join(", ")}
+            </p>
+          )}
 
           {recipe.missing.length > 0 && (
             <>

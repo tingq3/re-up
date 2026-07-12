@@ -27,6 +27,7 @@ const supabase = createClient(url, serviceKey, { auth: { persistSession: false }
 
 const root = path.resolve(fileURLToPath(import.meta.url), "../..");
 const data = JSON.parse(fs.readFileSync(path.join(root, "data/recipes.json"), "utf8"));
+const nutrition = JSON.parse(fs.readFileSync(path.join(root, "data/ingredient-nutrition.json"), "utf8"));
 
 // Diet flags are a function of ingredient attributes — same rules as the SQL seed.
 const MEAT = ["meat", "fish", "shellfish"];
@@ -37,6 +38,22 @@ const deriveFlags = (attrs) => ({
   is_gluten_free: !attrs.includes("gluten"),
 });
 
+// Converts recipe-friendly measures to a consistent gram value. These are estimates,
+// intentionally shown as such in the UI; explicit g/ml measures take precedence.
+const gramsFor = (quantity, name) => {
+  const amount = Number.parseFloat(quantity ?? "") || 1;
+  const unit = (quantity ?? "").toLowerCase();
+  if (/\bkg\b/.test(unit)) return amount * 1000;
+  if (/\b(g|gram|grams)\b/.test(unit)) return amount;
+  if (/\bml\b/.test(unit)) return amount;
+  if (/litre|liter/.test(unit)) return amount * 1000;
+  if (/tbsp|tablespoon/.test(unit)) return amount * 15;
+  if (/tsp|teaspoon/.test(unit)) return amount * 5;
+  if (/clove/.test(unit)) return amount * 3;
+  if (/handful/.test(unit)) return amount * 30;
+  return amount * (nutrition[name]?.portion ?? 100);
+};
+
 async function run() {
   // Idempotent: clear existing rows (children first).
   await supabase.from("recipe_ingredients").delete().gte("recipe_id", 0);
@@ -45,7 +62,11 @@ async function run() {
 
   const { data: ingRows, error: ingErr } = await supabase
     .from("ingredients")
-    .insert(data.ingredients.map(({ name, aliases, attributes }) => ({ name, aliases, attributes })))
+    .insert(data.ingredients.map(({ name, aliases, attributes }) => {
+      const values = nutrition[name];
+      if (!values) throw new Error(`Missing nutrition for ${name}`);
+      return { name, aliases, attributes, calories_per_100g: values.calories, protein_per_100g: values.protein, carbs_per_100g: values.carbs, fat_per_100g: values.fat, price_per_100g: values.price };
+    }))
     .select("id, name, attributes");
   if (ingErr) throw ingErr;
 
@@ -69,6 +90,7 @@ async function run() {
         recipe_id: recRows.id,
         ingredient_id: idByName.get(ri.name),
         quantity: ri.quantity ?? null,
+        quantity_grams: gramsFor(ri.quantity, ri.name),
         optional: ri.optional ?? false,
       }));
     const { error: linkErr } = await supabase.from("recipe_ingredients").insert(links);

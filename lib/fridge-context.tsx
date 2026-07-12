@@ -114,6 +114,8 @@ type FridgeContextValue = {
   // Favourites
   saved: number[];
   toggleSaved: (id: number) => void;
+  cooked: number[];
+  markCooked: (id: number) => void;
 };
 
 const FridgeContext = createContext<FridgeContextValue | null>(null);
@@ -129,6 +131,7 @@ export function FridgeProvider({ children }: { children: ReactNode }) {
   const [loadingRecipes, setLoadingRecipes] = useState(false);
   const [relaxed, setRelaxed] = useState(false);
   const [saved, setSaved] = useState<number[]>([]);
+  const [cooked, setCooked] = useState<number[]>([]);
   const [analyzing, setAnalyzing] = useState(false);
   const [analysisNote, setAnalysisNote] = useState<string | null>(null);
 
@@ -214,6 +217,9 @@ export function FridgeProvider({ children }: { children: ReactNode }) {
       current.includes(id) ? current.filter((value) => value !== id) : [...current, id],
     );
 
+  const markCooked = (id: number) =>
+    setCooked((current) => (current.includes(id) ? current : [...current, id]));
+
   const findRecipes = async () => {
     setLoadingRecipes(true);
     setRelaxed(false);
@@ -221,7 +227,7 @@ export function FridgeProvider({ children }: { children: ReactNode }) {
       const payload = {
         ingredients: ingredients
           .filter((item) => item.available)
-          .map((item) => ({ name: item.name, urgency: item.urgency })),
+          .map((item) => ({ name: item.name, quantity: item.quantity, urgency: item.urgency })),
         filters: {
           count: RECIPE_FETCH_COUNT,
           diet: dietary,
@@ -276,6 +282,8 @@ export function FridgeProvider({ children }: { children: ReactNode }) {
     findRecipes,
     saved,
     toggleSaved,
+    cooked,
+    markCooked,
   };
 
   return <FridgeContext.Provider value={value}>{children}</FridgeContext.Provider>;

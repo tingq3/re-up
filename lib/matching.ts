@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import type { Filters, RecipeMatch, RecipesResponse, Urgency, UserIngredient } from "./types";
+import type { Filters, RecipeIngredient, RecipeMatch, RecipesResponse, Urgency, UserIngredient } from "./types";
 
 const URGENCY_WEIGHT: Record<Urgency, number> = { Urgent: 3, Soon: 2, Fresh: 1 };
 const MAX_MISSING = 3; // a recipe must be roughly cookable to show, when partial matches are allowed
@@ -15,15 +15,16 @@ type CandidateRow = {
   name: string;
   image_url: string | null;
   time_minutes: number | null;
-  calories: number | null;
-  protein: number | null;
-  carbs: number | null;
-  fat: number | null;
+  servings: number | null;
   cuisine: string | null;
   category: string | null;
   tags: string[] | null;
   steps: string[] | null;
-  ingredients: { id: number; name: string; optional: boolean }[];
+  ingredients: Array<{
+    id: number; name: string; optional: boolean; quantity: string | null; quantity_grams: number | null;
+    calories_per_100g: number | null; protein_per_100g: number | null; carbs_per_100g: number | null;
+    fat_per_100g: number | null; price_per_100g: number | null;
+  }>;
 };
 
 const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
@@ -50,7 +51,7 @@ async function fetchCandidates(
 /** Rank candidates by ingredient coverage and the urgency of the items they consume. */
 function scoreCandidates(
   rows: CandidateRow[],
-  userById: Map<number, { weight: number; display: string }>,
+  userById: Map<number, { weight: number; display: string; urgency: Urgency }>,
   totalUrgencyWeight: number,
   maxMissing: number,
   diet: string[],
@@ -73,8 +74,40 @@ function scoreCandidates(
     const urgency = totalUrgencyWeight > 0 ? capturedWeight / totalUrgencyWeight : 0;
 
     let score = 100 * (COVERAGE_WEIGHT * coverage + URGENCY_SCORE_WEIGHT * urgency);
-    if (wantsHighProtein && (row.protein ?? 0) >= 25) score += 4;
-    if (wantsLowCarb && (row.carbs ?? 99) <= 20) score += 4;
+    const servings = Math.max(1, row.servings ?? 1);
+    const total = row.ingredients.reduce(
+      (sum, ingredient) => {
+        const multiplier = (ingredient.quantity_grams ?? 0) / 100;
+        return {
+          calories: sum.calories + (ingredient.calories_per_100g ?? 0) * multiplier,
+          protein: sum.protein + (ingredient.protein_per_100g ?? 0) * multiplier,
+          carbs: sum.carbs + (ingredient.carbs_per_100g ?? 0) * multiplier,
+          fat: sum.fat + (ingredient.fat_per_100g ?? 0) * multiplier,
+        };
+      },
+      { calories: 0, protein: 0, carbs: 0, fat: 0 },
+    );
+    const nutrition = Object.fromEntries(Object.entries(total).map(([key, value]) => [key, Math.round(value / servings)])) as typeof total;
+    if (wantsHighProtein && nutrition.protein >= 25) score += 4;
+    if (wantsLowCarb && nutrition.carbs <= 20) score += 4;
+
+    const usedIngredients: RecipeIngredient[] = used.map((ingredient) => ({
+      id: ingredient.id,
+      name: ingredient.name,
+      quantity: ingredient.quantity,
+      quantityGrams: ingredient.quantity_grams ?? 0,
+      optional: ingredient.optional,
+    }));
+    const estimatedSavings = used.reduce(
+      (sum, ingredient) => {
+        const value = ((ingredient.quantity_grams ?? 0) / 100) * (ingredient.price_per_100g ?? 0);
+        return {
+          avoidedPurchase: sum.avoidedPurchase + value,
+          avoidedWaste: sum.avoidedWaste + (userById.get(ingredient.id)?.urgency === "Urgent" ? value : 0),
+        };
+      },
+      { avoidedPurchase: 0, avoidedWaste: 0 },
+    );
 
     matches.push({
       id: row.id,
@@ -87,11 +120,17 @@ function scoreCandidates(
       tags: row.tags ?? [],
       used: used.map((ingredient) => userById.get(ingredient.id)!.display),
       missing: missing.map((ingredient) => capitalize(ingredient.name)),
-      calories: row.calories ?? 0,
-      protein: row.protein ?? 0,
-      carbs: row.carbs ?? 0,
-      fat: row.fat ?? 0,
+      calories: nutrition.calories,
+      protein: nutrition.protein,
+      carbs: nutrition.carbs,
+      fat: nutrition.fat,
       steps: row.steps ?? [],
+      servings,
+      ingredients: usedIngredients,
+      estimatedSavings: {
+        avoidedPurchase: Math.round(estimatedSavings.avoidedPurchase * 100) / 100,
+        avoidedWaste: Math.round(estimatedSavings.avoidedWaste * 100) / 100,
+      },
     });
   }
 
@@ -113,13 +152,13 @@ export async function matchRecipes(
   }
 
   // Collapse to unique canonical ids, keeping the most urgent user entry per id.
-  const userById = new Map<number, { weight: number; display: string }>();
+  const userById = new Map<number, { weight: number; display: string; urgency: Urgency }>();
   for (const ingredient of ingredients) {
     const id = idByTerm.get(ingredient.name);
     if (id == null) continue;
     const weight = URGENCY_WEIGHT[ingredient.urgency];
     const existing = userById.get(id);
-    if (!existing || weight > existing.weight) userById.set(id, { weight, display: ingredient.name });
+    if (!existing || weight > existing.weight) userById.set(id, { weight, display: ingredient.name, urgency: ingredient.urgency });
   }
 
   if (userById.size === 0) return { relaxed: false, recipes: [] };

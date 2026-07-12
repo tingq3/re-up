@@ -22,9 +22,12 @@ export default function TopBar() {
         >
           <Heart size={14} /> Favourites
         </Link>
-        <button className="inline-flex items-center gap-2 rounded-lg bg-ash-200 px-3 py-[9px] text-sm text-ink max-[700px]:px-[5px] max-[700px]:py-2 max-[700px]:text-xs">
+        <Link
+          href="/impact"
+          className="inline-flex items-center gap-2 rounded-lg bg-ash-200 px-3 py-[9px] text-sm text-ink hover:bg-pale max-[700px]:px-[5px] max-[700px]:py-2 max-[700px]:text-xs"
+        >
           <CircleDashed size={14} /> My impact
-        </button>
+        </Link>
       </nav>
     </header>
   );

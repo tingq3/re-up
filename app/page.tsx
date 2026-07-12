@@ -49,10 +49,10 @@ export default function UploadPage() {
       <h1 className="text-[clamp(42px,6vw,62px)] leading-[1.05] font-bold tracking-[-0.045em]">
         What&apos;s in your fridge
         <br />
-        <em className="font-bold text-leaf not-italic">today?</em>
+        <em className="font-bold text-leaf not-italic">Today?</em>
       </h1>
       <p className="mx-auto mt-4 mb-8 max-w-[465px] leading-[1.6] text-muted">
-        Turn the ingredients you already have into something delicious. Less waste, more good food.
+        Start cooking with what you have.
       </p>
 
       <div

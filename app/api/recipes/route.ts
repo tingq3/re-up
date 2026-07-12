@@ -19,6 +19,9 @@ const FALLBACK: RecipeMatch[] = [
     protein: 29,
     carbs: 6,
     fat: 22,
+    servings: 4,
+    ingredients: [],
+    estimatedSavings: { avoidedPurchase: 0, avoidedWaste: 0 },
     steps: [
       "Heat a large oven-safe pan and soften the onion with garlic.",
       "Add chicken and spinach, cooking until the leaves have wilted.",
@@ -41,6 +44,9 @@ const FALLBACK: RecipeMatch[] = [
     protein: 14,
     carbs: 18,
     fat: 10,
+    servings: 3,
+    ingredients: [],
+    estimatedSavings: { avoidedPurchase: 0, avoidedWaste: 0 },
     steps: [
       "Cook onion and bell pepper until soft.",
       "Simmer tomatoes with cumin and smoked paprika.",
@@ -63,6 +69,9 @@ const FALLBACK: RecipeMatch[] = [
     protein: 16,
     carbs: 19,
     fat: 16,
+    servings: 4,
+    ingredients: [],
+    estimatedSavings: { avoidedPurchase: 0, avoidedWaste: 0 },
     steps: [
       "Sauté onion and garlic in butter.",
       "Add chopped broccoli and stock, simmering until tender.",

@@ -16,6 +16,16 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Nutrition and impact data
+
+Apply [`supabase/migrations/202607120001_ingredient_nutrition_and_impact.sql`](supabase/migrations/202607120001_ingredient_nutrition_and_impact.sql) in the Supabase SQL editor, then reseed the catalogue:
+
+```bash
+node --env-file=.env.local scripts/seed.mjs
+```
+
+Seeding requires `SUPABASE_SERVICE_ROLE_KEY`. Nutrition and average Australian prices are held per 100 g in `data/ingredient-nutrition.json`; recipe amounts are normalised to grams during the seed.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

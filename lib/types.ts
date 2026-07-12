@@ -6,6 +6,22 @@ export type Urgency = "Urgent" | "Soon" | "Fresh";
 export type UserIngredient = {
   name: string;
   urgency: Urgency;
+  quantity?: string;
+};
+
+export type Nutrition = {
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+};
+
+export type RecipeIngredient = {
+  id: number;
+  name: string;
+  quantity: string | null;
+  quantityGrams: number;
+  optional: boolean;
 };
 
 export type Filters = {
@@ -40,6 +56,9 @@ export type RecipeMatch = {
   carbs: number;
   fat: number;
   steps: string[];
+  servings: number;
+  ingredients: RecipeIngredient[];
+  estimatedSavings: { avoidedPurchase: number; avoidedWaste: number };
 };
 
 export type RecipesResponse = {
