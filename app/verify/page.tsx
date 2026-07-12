@@ -31,7 +31,7 @@ export default function VerifyPage() {
 
       <div className="flex items-end justify-between gap-5 max-[700px]:flex-col max-[700px]:items-start">
         <div>
-          <p className="mb-3 text-[11px] font-bold tracking-[0.13em] text-leaf">HUMAN CHECK</p>
+          {/* <p className="mb-3 text-[11px] font-bold tracking-[0.13em] text-leaf">HUMAN CHECK</p> */}
           <h2 className="text-[40px] font-bold tracking-[-0.04em]">
             {ingredients.length === 0 ? "What's in your fridge?" : "Does this look right?"}
           </h2>

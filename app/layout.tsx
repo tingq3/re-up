@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Jost } from "next/font/google";
 import "./globals.css";
 import { FridgeProvider } from "@/lib/fridge-context";
 import TopBar from "./components/top-bar";
 
-const geist = Geist({
+const jost = Jost({
   subsets: ["latin"],
   display: "swap",
 });
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={geist.className}>
+    <html lang="en" className={jost.className}>
       <body className="bg-cream text-ink">
         <FridgeProvider>
           <TopBar />

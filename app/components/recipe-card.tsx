@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check, Clock } from "lucide-react";
+import { Check, Clock, ShoppingBasket } from "lucide-react";
 import type { RecipeMatch } from "@/lib/types";
 
 type Props = {
@@ -46,8 +46,13 @@ export default function RecipeCard({ recipe, compact = false }: Props) {
               <Clock size={13} /> {recipe.time} min
             </p>
             <div className="mt-4 flex items-center gap-1 border-t border-ash-250 pt-3 text-xs font-bold text-leaf">
-              <Check size={13} /> Uses {recipe.used.length} fridge ingredients
+              <Check size={13} /> Uses {recipe.used.length} ingredients
             </div>
+            {recipe.missing.length > 0 && (
+              <div className="mt-1 flex items-center gap-1 text-xs font-bold text-alert">
+                <ShoppingBasket size={13} /> Missing {recipe.missing.length}: {recipe.missing.join(", ")}
+              </div>
+            )}
           </>
         )}
       </div>

@@ -27,11 +27,10 @@ export default function ResultsPage() {
     <section className="mx-auto w-[min(1050px,calc(100%-48px))] pt-12 pb-20 max-[700px]:w-[min(100%-32px,1050px)]">
       <Stepper active={3} />
 
-      <p className="mb-3 text-[11px] font-bold tracking-[0.13em] text-leaf">YOUR BEST MATCHES</p>
-      <h2 className="text-[40px] font-bold tracking-[-0.04em]">Cook something brilliant.</h2>
+      {/* <p className="mb-3 text-[11px] font-bold tracking-[0.13em] text-leaf">YOUR BEST MATCHES</p> */}
+      <h2 className="text-[40px] font-bold tracking-[-0.04em]">Recipes</h2>
       <p className="mt-3 mb-6 leading-[1.55] text-muted">
-        Ranked to use what&apos;s already in your fridge — especially the ingredients that need you
-        most.
+        Ranked to use the ingredients that you need most.
       </p>
 
       {relaxed && recipes.length > 0 && (

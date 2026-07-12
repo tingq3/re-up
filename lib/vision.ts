@@ -1,4 +1,5 @@
 import { GoogleGenAI, Type } from "@google/genai";
+import { listIngredients } from "./ingredients";
 import type { AnalyzedIngredient, Urgency, VisionUrgency } from "./types";
 
 // Gemini is used purely as a vision adapter: fridge photo -> ingredient names,
@@ -7,7 +8,7 @@ import type { AnalyzedIngredient, Urgency, VisionUrgency } from "./types";
 
 const MODEL = process.env.GEMINI_MODEL ?? "gemini-3.5-flash";
 
-const PROMPT = `
+const BASE_PROMPT = `
 Identify all clearly visible edible ingredients in this fridge image.
 
 Return only the ingredient name, estimated visible quantity, and estimated urgency.
@@ -27,6 +28,22 @@ Important rules:
 - Urgency is only a visual estimate and will be confirmed by the user.
 - Do not include explanations or additional fields.
 `.trim();
+
+/**
+ * Bias Gemini toward the app's canonical ingredient names without hard-constraining
+ * it to them (an enum would drop real items the recipe DB just doesn't cover yet).
+ * resolve_ingredients still does exact/alias/fuzzy matching downstream, so this is
+ * purely a hint to reduce how often that fuzzy fallback has to fire.
+ */
+function buildPrompt(catalogueNames: string[]): string {
+  if (catalogueNames.length === 0) return BASE_PROMPT;
+  return `${BASE_PROMPT}
+
+Known ingredient catalogue: ${catalogueNames.join(", ")}.
+When an item matches one of these (even if described differently in the photo,
+e.g. "roma tomato" -> "tomato"), use that exact catalogue name. If an item doesn't
+match any of these, use its most natural common name instead.`;
+}
 
 // Structured-output schema so Gemini returns clean JSON (no markdown fences to strip).
 const SCHEMA = {
@@ -75,13 +92,20 @@ export async function analyzeFridgeImage(
     throw new Error("Missing GEMINI_API_KEY");
   }
 
+  // Best-effort: a catalogue fetch failure shouldn't block vision entirely, it
+  // just means the prompt falls back to no naming hints.
+  const catalogueNames = await listIngredients()
+    .then((rows) => rows.map((row) => row.name))
+    .catch(() => []);
+  const prompt = buildPrompt(catalogueNames);
+
   const ai = new GoogleGenAI({ apiKey });
   const response = await ai.models.generateContent({
     model: MODEL,
     contents: [
       {
         role: "user",
-        parts: [{ text: PROMPT }, { inlineData: { mimeType, data: base64 } }],
+        parts: [{ text: prompt }, { inlineData: { mimeType, data: base64 } }],
       },
     ],
     config: {

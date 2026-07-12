@@ -37,7 +37,7 @@ export default function PreferencesPage() {
     <section className="mx-auto w-[min(720px,calc(100%-48px))] pt-12 pb-20">
       <Stepper active={2} />
 
-      <p className="mb-3 text-[11px] font-bold tracking-[0.13em] text-leaf">MAKE IT YOURS</p>
+      {/* <p className="mb-3 text-[11px] font-bold tracking-[0.13em] text-leaf">MAKE IT YOURS</p> */}
       <h2 className="text-[40px] font-bold tracking-[-0.04em]">What are you in the mood for?</h2>
       <p className="mt-3 mb-6 leading-[1.55] text-muted">
         We&apos;ll use these to tailor your recipe matches.

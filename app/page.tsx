@@ -43,16 +43,17 @@ export default function UploadPage() {
 
   return (
     <section className="mx-auto max-w-[760px] px-6 pt-16 pb-12 text-center max-[700px]:pt-[53px]">
-      <p className="mb-3 text-[11px] font-bold tracking-[0.13em] text-leaf">
+      {/* <p className="mb-3 text-[11px] font-bold tracking-[0.13em] text-leaf">
         YOUR KITCHEN, MADE EASIER
-      </p>
+      </p> */}
       <h1 className="text-[clamp(42px,6vw,62px)] leading-[1.05] font-bold tracking-[-0.045em]">
-        What&apos;s in your fridge
+        {/* What&apos;s in your fridge
         <br />
-        <em className="font-bold text-leaf not-italic">today?</em>
+        <em className="font-bold text-leaf not-italic">today?</em> */}
+        STOP <span className="text-leaf">WASTING</span> FOOD
       </h1>
       <p className="mx-auto mt-4 mb-8 max-w-[465px] leading-[1.6] text-muted">
-        Turn the ingredients you already have into something delicious. Less waste, more good food.
+        Cook something with your leftovers!
       </p>
 
       <div

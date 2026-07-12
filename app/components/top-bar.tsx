@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CircleDashed, Heart, Sparkles } from "lucide-react";
+import { CircleDashed, Heart, Refrigerator } from "lucide-react";
 
 export default function TopBar() {
   return (
@@ -11,7 +11,7 @@ export default function TopBar() {
         href="/"
       >
         <span className="flex rounded-[9px] bg-leaf px-1.5 py-[5px] text-white">
-          <Sparkles size={14} />
+          <Refrigerator size={14} />
         </span>
         PrepFridge
       </Link>

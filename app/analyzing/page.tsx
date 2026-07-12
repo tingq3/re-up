@@ -24,7 +24,7 @@ export default function AnalyzingPage() {
       <div className="mx-auto mb-6 grid h-[68px] w-[68px] place-items-center rounded-[23px] bg-pale text-leaf animate-[throb_1s_infinite_alternate]">
         <Sparkles size={28} />
       </div>
-      <p className="mb-3 text-[11px] font-bold tracking-[0.13em] text-leaf">AI VISION AT WORK</p>
+      <p className="mb-3 text-[11px] font-bold tracking-[0.13em] text-leaf">ANALYSING PHOTO</p>
       <h1 className="text-[45px] leading-[1.05] font-bold tracking-[-0.045em]">
         Looking inside your fridge…
       </h1>
