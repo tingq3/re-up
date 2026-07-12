@@ -114,8 +114,11 @@ export default function RecipeDetailPage() {
           <h3 className="text-[23px] font-bold">Ingredients</h3>
           <p className="mt-4 mb-2 text-[10px] font-bold tracking-[0.11em] text-leaf">YOU HAVE</p>
           {recipe.used.map((item) => (
-            <p className="my-2 flex items-center gap-2 text-[13px]" key={item}>
-              <Check size={14} /> {item}
+            <p className="my-2 flex items-center justify-between gap-2 text-[13px]" key={item.name}>
+              <span className="flex items-center gap-2">
+                <Check size={14} /> {item.name}
+              </span>
+              {item.quantity && <span className="text-muted">{item.quantity}</span>}
             </p>
           ))}
 
@@ -125,8 +128,11 @@ export default function RecipeDetailPage() {
                 SHOPPING LIST
               </p>
               {recipe.missing.map((item) => (
-                <p className="my-2 flex items-center gap-2 text-[13px]" key={item}>
-                  <Circle size={14} /> {item}
+                <p className="my-2 flex items-center justify-between gap-2 text-[13px]" key={item.name}>
+                  <span className="flex items-center gap-2">
+                    <Circle size={14} /> {item.name}
+                  </span>
+                  {item.quantity && <span className="text-muted">{item.quantity}</span>}
                 </p>
               ))}
             </>

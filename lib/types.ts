@@ -23,6 +23,12 @@ export type RecipesRequest = {
   filters: Filters;
 };
 
+/** A recipe ingredient with the quantity the recipe calls for. */
+export type RecipeIngredientAmount = {
+  name: string;
+  quantity: string;
+};
+
 /** A scored recipe, shaped for the frontend. */
 export type RecipeMatch = {
   id: number;
@@ -33,8 +39,8 @@ export type RecipeMatch = {
   cuisine: string | null;
   category: string | null;
   tags: string[];
-  used: string[]; // ingredients the user has (display names)
-  missing: string[]; // required ingredients the user lacks (shopping list)
+  used: RecipeIngredientAmount[]; // ingredients the user has (display name + recipe quantity)
+  missing: RecipeIngredientAmount[]; // required ingredients the user lacks (shopping list)
   calories: number;
   protein: number;
   carbs: number;

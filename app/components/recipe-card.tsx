@@ -50,7 +50,8 @@ export default function RecipeCard({ recipe, compact = false }: Props) {
             </div>
             {recipe.missing.length > 0 && (
               <div className="mt-1 flex items-center gap-1 text-xs font-bold text-alert">
-                <ShoppingBasket size={13} /> Missing {recipe.missing.length}: {recipe.missing.join(", ")}
+                <ShoppingBasket size={13} /> Missing {recipe.missing.length}:{" "}
+                {recipe.missing.map((ingredient) => ingredient.name).join(", ")}
               </div>
             )}
           </>

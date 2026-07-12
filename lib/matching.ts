@@ -23,7 +23,7 @@ type CandidateRow = {
   category: string | null;
   tags: string[] | null;
   steps: string[] | null;
-  ingredients: { id: number; name: string; optional: boolean }[];
+  ingredients: { id: number; name: string; optional: boolean; quantity: string | null }[];
 };
 
 const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
@@ -85,8 +85,14 @@ function scoreCandidates(
       cuisine: row.cuisine,
       category: row.category,
       tags: row.tags ?? [],
-      used: used.map((ingredient) => userById.get(ingredient.id)!.display),
-      missing: missing.map((ingredient) => capitalize(ingredient.name)),
+      used: used.map((ingredient) => ({
+        name: userById.get(ingredient.id)!.display,
+        quantity: ingredient.quantity ?? "",
+      })),
+      missing: missing.map((ingredient) => ({
+        name: capitalize(ingredient.name),
+        quantity: ingredient.quantity ?? "",
+      })),
       calories: row.calories ?? 0,
       protein: row.protein ?? 0,
       carbs: row.carbs ?? 0,
